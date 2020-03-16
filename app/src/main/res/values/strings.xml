@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MaricoSurvey</string>
+    <string name="gps_network_not_enabled">Gps not enabled</string>
+</resources>
