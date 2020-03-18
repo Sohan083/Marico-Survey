@@ -19,6 +19,7 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name="com.example.maricosurvey.LoginActivity" />
         <activity android:name=".form"/>
+        <activity android:name=".check"/>
         <activity android:name=".MainActivity">
 
             <intent-filter>
