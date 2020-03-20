@@ -34,7 +34,7 @@ public class check extends AppCompatActivity {
             "Langadu Upazila", "Naniarchar Upazila", "Rajasthali Upazila", "Rangamati Sadar Upazila", "Adabor", "Badda", "Bangshal", "Biman Bandar", "Banani", "Cantonment", "Chak Bazar", "Dakshinkhan", "Darus Salam", "Demra", "Dhamrai",
             "Dhanmondi", "Dohar", "Bhasan Tek", "Bhatara", "Gendaria", "Gulshan", "Hazaribagh", "Jatrabari", "Kafrul", "Kadamtali", "Kalabagan", "Kamrangir Char", "Khilgaon", "Khilkhet", "Keraniganj", "Kotwali", "Lalbagh",
             "Mirpur", "Mohammadpur", "Motijheel", "Mugda Para", "Nawabganj", "New Market", "Pallabi", "Paltan", "Ramna", "Rampura", "Sabujbagh", "Rupnagar", "Savar", "Shahjahanpur", "Shah Ali", "Shahbagh",
-            "Shyampur", "Sher-e-bangla Nagar", "Sutrapur", "Tejgaon Ind.Area", "Turag", "Uttara Paschim", "Uttara Purba","Uttar Khan", "Wari", "Alfadanga", "Bhanga", "Boalmari", "Char Bhadrasan", "Faridpur Sadar", "Madhukhali",
+            "Shyampur", "Sher-e-bangla Nagar", "Sutrapur", "Tejgaon", "Tejgaon Ind.Area", "Turag", "Uttara Paschim", "Uttara Purba","Uttar Khan", "Wari", "Alfadanga", "Bhanga", "Boalmari", "Char Bhadrasan", "Faridpur Sadar", "Madhukhali",
             "Nagarkanda", "Sadarpur", "Saltha", "Gazipur Sadar", "Kaliakair", "Kaliganj", "Kapasia", "Sreepur", "Gopalganj Sadar", "Kashiani", "Kotalipara", "Muksudpur", "Tungipara", "Bakshiganj", "Dewanganj", "Islampur",
             "Jamalpur Sadar", "Madarganj", "Melandaha", "Sarishabari Upazila", "Austagram", "Bajitpur", "Bhairab", "Hossainpur", "Itna", "Karimganj", "Katiadi", "Kishoreganj Sadar", "Kuliar Char", "Mithamain", "Nikli", "Pakundia",
             "Tarail", "Kalkini", "Madaripur Sadar", "Rajoir", "Shibchar", "Daulatpur", "Ghior", "Harirampur", "Manikganj Sadar", "Saturia", "Shibalaya", "Singair", "Gazaria", "Lohajang", "Munshiganj Sadar", "Serajdikhan",
@@ -54,7 +54,7 @@ public class check extends AppCompatActivity {
             "Kaliganj", "Lalmonirhat Sadar", "Patgram", "Dimla Upazila", "Domar Upazila", "Jaldhaka Upazila","Kishorganj Upazila", "Nilphamari Sadar Upazila", "Saidpur Upazila", "Atwari", "Boda", "Debiganj", "Panchagarh Sadar", "Tentulia", "Badarganj",
             "Gangachara", "Kaunia", "Rangpur Sadar", "Mitha Pukur", "Pirgachha", "Pirganj", "Taraganj", "Baliadangi", "Haripur", "Pirganj", "Ranisankail", "Thakurgaon Sadar", "Ajmiriganj", "Bahubal", "Baniachong", "Chunarughat", "Habiganj Sadar", "Lakhai",
             "Madhabpur", "Nabiganj", "Barlekha", "Juri", "Kamalganj", "Kulaura", "Maulvibazar Sadar", "Rajnagar", "Sreemangal", "Bishwambarpur", "Chhatak", " Dakshin Sunamganj", "Derai", "Dharampasha", "Dowarabazar", "Jagannathpur", "Jamalganj", "Sulla", "Sunamganj Sadar",
-            "Tahirpur", "Balaganj", "Beani Bazar", "Bishwanath", "Companiganj", "Dakshin Surma", "Fenchuganj", "Golapganj", "Gowainghat", "Jaintiapur", "Kanaighat", "Sylhet Sadar", "Zakiganj", };
+            "Tahirpur", "Balaganj", "Beani Bazar", "Bishwanath", "Companiganj", "Dakshin Surma", "Fenchuganj", "Golapganj", "Gowainghat", "Jaintiapur", "Kanaighat", "Sylhet Sadar", "Zakiganj"};
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

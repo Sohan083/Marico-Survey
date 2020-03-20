@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         iv = (ImageView) findViewById(R.id.iv);
         Animation myanim = AnimationUtils.loadAnimation(this,R.anim.mytransition);
         iv.startAnimation(myanim);
-        final Intent i = new Intent(this,check.class);
+        final Intent i = new Intent(this,form.class);
         Thread timer = new Thread() {
             public void run() {
                 try {

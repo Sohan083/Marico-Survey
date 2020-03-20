@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/gradient_background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="false">
     <LinearLayout
@@ -13,7 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayout3"
@@ -29,12 +30,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Marico Survey Form"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:text="Doctor's Info:"
+                    android:textColor="@color/tittle"
+                    android:textSize="25sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.05"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -51,34 +53,35 @@
 
                 <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="170dp"
+                    android:layout_width="370dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_square"
                     android:gravity="center"
                     android:paddingLeft="10dp"
                     android:paddingBottom="5dp"
-                    android:text="Doctor's Name:   "
+                    android:text="Name:   "
                     android:textColor="@color/text_color"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/doctorName"
+                    app:layout_constraintBottom_toTopOf="@+id/doctorName"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/doctorName"
-                    android:layout_width="200sp"
+                    android:layout_width="365dp"
                     android:layout_height="40sp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/edit_text"
                     android:hint="Doctor's Name"
                     android:paddingLeft="10sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/input_color"
                     android:textColorHint="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView2"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView2" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,14 +89,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
                 <TextView
                     android:id="@+id/textView3"
-                    android:layout_width="170dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:background="@drawable/button_square"
                     android:gravity="center"
                     android:paddingLeft="10dp"
@@ -109,35 +115,28 @@
 
                 <EditText
                     android:id="@+id/doctorAge"
-                    android:layout_width="200sp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40sp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:autofillHints="Age"
+                    android:inputType="number"
                     android:background="@drawable/edit_text"
-                    android:hint="Doctor's Age"
+                    android:hint="Doctor's Age  "
                     android:paddingLeft="10sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/input_color"
                     android:textColorHint="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textView9"
                     app:layout_constraintStart_toEndOf="@+id/textView3"
                     app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout6"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
 
                 <TextView
                     android:id="@+id/textView9"
-                    android:layout_width="170dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:background="@drawable/button_square"
                     android:gravity="center"
                     android:paddingLeft="10dp"
@@ -148,20 +147,23 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/sdropdown"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/doctorAge"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Spinner
                     android:id="@+id/sdropdown"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView9"
-                    app:layout_constraintTop_toTopOf="@+id/textView9" />
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout3"
@@ -171,7 +173,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/constraintLayout345"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
 
                 <TextView
                     android:id="@+id/textView5"
@@ -194,6 +196,7 @@
                     android:id="@+id/constraintLayout9"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView5"
                     app:layout_constraintTop_toTopOf="parent">
@@ -298,7 +301,7 @@
                         android:id="@+id/constraintLayout5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/constraintLayout80"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
@@ -326,6 +329,41 @@
                             app:layout_constraintStart_toEndOf="@+id/textView8"
                             app:layout_constraintTop_toTopOf="@+id/textView8" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout80"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+                        <TextView
+                            android:id="@+id/textView80"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="Diploma"
+                            android:textColor="@color/blue"
+                            android:textSize="20dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/chkdiploma"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <CheckBox
+                            android:id="@+id/chkdiploma"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginRight="16dp"
+                            android:theme="@style/MyCheckBox"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView8"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView80"
+                            app:layout_constraintTop_toTopOf="@+id/textView8" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -335,13 +373,15 @@
                 android:id="@+id/constraintLayout345"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout10"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
                 <TextView
                     android:id="@+id/textView10"
-                    android:layout_width="170dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_square"
                     android:gravity="center"
@@ -352,21 +392,36 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/bcsdropdown"
+                    app:layout_constraintEnd_toStartOf="@+id/bcsGroup"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Spinner
-                    android:id="@+id/bcsdropdown"
+                <RadioGroup
+                    android:id="@+id/bcsGroup"
                     android:layout_width="200dp"
-                    android:layout_height="40dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView10"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layout_shape"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView10"
-                    app:layout_constraintTop_toTopOf="@+id/textView10"
-                    app:layout_constraintVertical_bias="0.166" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="No" />
+                </RadioGroup>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -380,8 +435,9 @@
 
                 <TextView
                     android:id="@+id/textView29"
-                    android:layout_width="wrap_content"
+                    android:layout_width="370dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/button_square"
                     android:gravity="center"
                     android:paddingLeft="10dp"
@@ -390,20 +446,21 @@
                     android:textColor="@color/text_color"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/owf"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/owf"
-                    android:layout_width="350dp"
+                    android:layout_width="365dp"
                     android:layout_height="45dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edit_text"
                     android:gravity="center"
                     android:hint="Organizaion works for:"
                     android:paddingLeft="10sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/input_color"
                     android:textColorHint="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -415,6 +472,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout14"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -445,7 +504,7 @@
                     android:hint="1st Phone Number"
                     android:inputType="number"
                     android:paddingLeft="10sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/input_color"
                     android:textColorHint="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView16"
@@ -460,7 +519,7 @@
                     android:hint="2nd Phone Number"
                     android:inputType="number"
                     android:paddingLeft="10sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/input_color"
                     android:textColorHint="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/fstphn"
@@ -475,6 +534,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout12"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout11">
@@ -504,7 +565,7 @@
                     android:hint="Eamil"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="10sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/input_color"
                     android:textColorHint="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/textView13"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -549,7 +610,7 @@
                     android:hint="Patients per day(avg)"
                     android:inputType="number"
                     android:paddingLeft="10sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/input_color"
                     android:textColorHint="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -562,136 +623,187 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/constraintLayout34"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout15"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout12">
 
                 <TextView
                     android:id="@+id/textView15"
-                    android:layout_width="170dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_square"
                     android:gravity="center"
                     android:paddingLeft="10dp"
                     android:paddingBottom="5dp"
-                    android:text="Visit Fees:"
+                    android:text="Fees:"
                     android:textColor="@color/text_color"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/fees"
+                    app:layout_constraintEnd_toStartOf="@+id/feeslay"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/fees"
-                    android:layout_width="200sp"
-                    android:layout_height="40sp"
-                    android:background="@drawable/edit_text"
-                    android:hint="Visit fees (taka)"
-                    android:inputType="number"
-                    android:paddingLeft="10sp"
-                    android:textColor="@color/text_color"
-                    android:textColorHint="@color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView15"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout34"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout13">
-
-                <TextView
-                    android:id="@+id/textView30"
-                    android:layout_width="170dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/feeslay"
+                    android:layout_width="320dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_square"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:paddingBottom="5dp"
-                    android:text="Re Visit Fees:"
-                    android:textColor="@color/text_color"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/refees"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <EditText
-                    android:id="@+id/refees"
-                    android:layout_width="200sp"
-                    android:layout_height="40sp"
-                    android:background="@drawable/edit_text"
-                    android:hint="Re visit fees (taka)"
-                    android:inputType="number"
-                    android:paddingLeft="10sp"
-                    android:textColor="@color/text_color"
-                    android:textColorHint="@color/black"
+                    android:background="@drawable/layout_shape"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView30"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@id/textView15"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <EditText
+                        android:id="@+id/fees"
+                        android:layout_width="80dp"
+                        android:layout_height="35sp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/edit_text_two"
+                        android:hint="Taka"
+                        android:inputType="number"
+                        android:paddingLeft="10sp"
+                        android:textColor="@color/input_color"
+                        android:textColorHint="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textView30"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:text="1st visit"
+                        android:textColor="@color/check"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/refees"
+                        app:layout_constraintStart_toEndOf="@+id/fees"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/refees"
+                        android:layout_width="80dp"
+                        android:layout_height="35sp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/edit_text_two"
+                        android:hint="Taka"
+                        android:inputType="number"
+                        android:paddingLeft="10sp"
+                        android:textColor="@color/input_color"
+                        android:textColorHint="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textView50"
+                        app:layout_constraintStart_toEndOf="@+id/textView30"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView50"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:text="Re visit"
+                        android:textColor="@color/check"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/refees"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout15"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/firstChamber"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout34"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout34">
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout13">
 
                 <TextView
                     android:id="@+id/textView28"
-                    android:layout_width="170dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_square"
                     android:gravity="center"
                     android:paddingLeft="10dp"
                     android:paddingBottom="5dp"
-                    android:text="How many chambers: "
+                    android:text="Chamber No. "
                     android:textColor="@color/text_color"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/schambers"
+                    app:layout_constraintEnd_toStartOf="@+id/chamberNo"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
 
-                <Spinner
-                    android:id="@+id/schambers"
+                <RadioGroup
+                    android:id="@+id/chamberNo"
                     android:layout_width="200dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView28"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layout_shape"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView28"
-                    app:layout_constraintTop_toTopOf="@+id/textView28"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/ch1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="1"
+                        android:textColor="@color/check" />
+
+                    <RadioButton
+                        android:id="@+id/ch2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="2"
+                        android:textColor="@color/check" />
+
+                    <RadioButton
+                        android:id="@+id/ch3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="3"
+                        android:textColor="@color/check" />
+                </RadioGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/firstChamber"
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/layout_border"
-                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/secondChamber"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -707,6 +819,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
+                        android:id="@+id/textView46"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1st"
@@ -721,6 +834,8 @@
                         android:id="@+id/textView12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:background="@drawable/button_square"
                         android:gravity="center"
                         android:paddingLeft="10dp"
@@ -729,26 +844,73 @@
                         android:textColor="@color/text_color"
                         android:textSize="20sp"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/firstautofill"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView46"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/firstautofill"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal"
                         app:layout_constraintBottom_toTopOf="@+id/firstadd"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/textView12">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/firstdivisionList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40sp"
+                            android:layout_weight="1"
+                            android:hint="Division"
+                            android:textColor="@color/input_color"
+                            android:textColorHint="@color/blue"
+                            app:layout_constraintBottom_toTopOf="@+id/firstdistrictList"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/firstdistrictList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40sp"
+                            android:layout_weight="1"
+                            android:hint="District"
+                            android:textColor="@color/input_color"
+                            android:textColorHint="@color/blue"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/firstdivisionList" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/firstthanaList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40sp"
+                            android:layout_weight="1"
+                            android:hint="Thana"
+                            android:textColor="@color/input_color"
+                            android:textColorHint="@color/blue" />
+                    </LinearLayout>
 
                     <EditText
                         android:id="@+id/firstadd"
                         android:layout_width="350dp"
                         android:layout_height="45dp"
-                        android:layout_marginTop="8dp"
                         android:background="@drawable/edit_text"
                         android:gravity="center"
-                        android:hint="Chamber's address"
+                        android:hint="Chamber's address (Road no)"
                         android:paddingLeft="10sp"
                         android:textColor="@color/text_color"
                         android:textColorHint="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                        app:layout_constraintTop_toBottomOf="@+id/firstautofill" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -763,36 +925,67 @@
 
                     <TextView
                         android:id="@+id/textView27"
-                        android:layout_width="180dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_square"
                         android:gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingBottom="5dp"
-                        android:text="Chamber's Times:  "
+                        android:text="Chamber's Hour:  "
                         android:textColor="@color/text_color"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@+id/firstchmbertime"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/firstchamerStarttime"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/firstchmbertime"
-                        android:layout_width="350dp"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/edit_text"
-                        android:gravity="center"
-                        android:hint="Chamber's time"
+                        android:id="@+id/firstchamerStarttime"
+                        android:layout_width="80dp"
+                        android:layout_height="35sp"
+                        android:background="@drawable/edit_text_two"
+                        android:hint="10"
+                        android:inputType="number"
                         android:paddingLeft="10sp"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/input_color"
+                        android:textColorHint="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textView60"
+                        app:layout_constraintStart_toEndOf="@id/textView27"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView60"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:text="to"
+                        android:textColor="@color/check"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/firstchamerEndtime"
+                        app:layout_constraintStart_toEndOf="@+id/firstchamerStarttime"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/firstchamerEndtime"
+                        android:layout_width="80dp"
+                        android:layout_height="35sp"
+                        android:background="@drawable/edit_text_two"
+                        android:hint="5"
+                        android:inputType="number"
+                        android:paddingLeft="10sp"
+                        android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+                        app:layout_constraintStart_toEndOf="@+id/textView60"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -800,6 +993,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/firstchmberlay">
@@ -832,12 +1027,17 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textView17"
                         app:layout_constraintTop_toTopOf="@+id/textView17" />
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout17">
@@ -873,11 +1073,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/secondChamber"
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/layout_border"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/firstChamber">
@@ -886,11 +1086,15 @@
                     android:id="@+id/constraintLayout18"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/scndchmbertimelay"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
+                        android:id="@+id/textView47"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2nd"
@@ -905,6 +1109,7 @@
                         android:id="@+id/textView19"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         android:background="@drawable/button_square"
                         android:gravity="center"
                         android:paddingLeft="10dp"
@@ -913,26 +1118,73 @@
                         android:textColor="@color/text_color"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@+id/secondsowf"
+                        app:layout_constraintBottom_toTopOf="@+id/secondautofill"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView47"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <LinearLayout
+                        android:id="@+id/secondautofill"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@+id/secondadd"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textView19">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/seconddivisionList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40sp"
+                            android:layout_weight="1"
+                            android:hint="Division"
+                            android:textColor="@color/input_color"
+                            android:textColorHint="@color/blue"
+                            app:layout_constraintBottom_toTopOf="@+id/seconddistrictList"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/seconddistrictList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40sp"
+                            android:layout_weight="1"
+                            android:hint="District"
+                            android:textColor="@color/input_color"
+                            android:textColorHint="@color/blue"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/seconddivisionList" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/secondthanaList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40sp"
+                            android:layout_weight="1"
+                            android:hint="Thana"
+                            android:textColor="@color/input_color"
+                            android:textColorHint="@color/blue" />
+                    </LinearLayout>
+
                     <EditText
-                        android:id="@+id/secondsowf"
+                        android:id="@+id/secondadd"
                         android:layout_width="350dp"
                         android:layout_height="45dp"
-                        android:layout_marginTop="8dp"
                         android:background="@drawable/edit_text"
                         android:gravity="center"
-                        android:hint="Chamber's address"
+                        android:hint="Chamber's address (Road no)"
                         android:paddingLeft="10sp"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+                        app:layout_constraintTop_toBottomOf="@+id/secondautofill" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -947,36 +1199,64 @@
 
                     <TextView
                         android:id="@+id/textView26"
-                        android:layout_width="180dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_square"
                         android:gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingBottom="5dp"
-                        android:text="Chamber's Times:  "
+                        android:text="Chamber's Hour:  "
                         android:textColor="@color/text_color"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@+id/secondchmbertime"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/secondchamerStarttime"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/secondchmbertime"
-                        android:layout_width="350dp"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/edit_text"
-                        android:gravity="center"
-                        android:hint="Chamber's time"
+                        android:id="@+id/secondchamerStarttime"
+                        android:layout_width="80dp"
+                        android:layout_height="35sp"
+                        android:background="@drawable/edit_text_two"
+                        android:hint="10"
+                        android:inputType="number"
                         android:paddingLeft="10sp"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/input_color"
+                        android:textColorHint="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textView72"
+                        app:layout_constraintStart_toEndOf="@id/textView26"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView72"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:text="to"
+                        android:textColor="@color/check"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/secondchamerEndtime"
+                        app:layout_constraintStart_toEndOf="@+id/secondchamerStarttime"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <EditText
+                        android:id="@+id/secondchamerEndtime"
+                        android:layout_width="80dp"
+                        android:layout_height="35sp"
+                        android:background="@drawable/edit_text_two"
+                        android:hint="5"
+                        android:inputType="number"
+                        android:paddingLeft="10sp"
+                        android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView26" />
+                        app:layout_constraintStart_toEndOf="@+id/textView72"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -1024,6 +1304,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout19">
@@ -1059,10 +1341,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/thirdChamber"
-                android:background="@drawable/layout_border"
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/layout_border"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/secondChamber">
@@ -1089,6 +1372,8 @@
                         android:id="@+id/textView11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:background="@drawable/button_square"
                         android:gravity="center"
                         android:paddingLeft="10dp"
@@ -1097,26 +1382,73 @@
                         android:textColor="@color/text_color"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@+id/thirdsowf"
+                        app:layout_constraintBottom_toTopOf="@+id/thirdautofill"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView22"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <LinearLayout
+                        android:id="@+id/thirdautofill"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@+id/thirdadd"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textView11">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/thirddivisionList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40sp"
+                            android:layout_weight="1"
+                            android:hint="Division"
+                            android:textColor="@color/input_color"
+                            android:textColorHint="@color/blue"
+                            app:layout_constraintBottom_toTopOf="@+id/thirddistrictList"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/thirddistrictList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40sp"
+                            android:layout_weight="1"
+                            android:hint="District"
+                            android:textColor="@color/input_color"
+                            android:textColorHint="@color/blue"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/thirddivisionList" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/thirdthanaList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40sp"
+                            android:layout_weight="1"
+                            android:hint="Thana"
+                            android:textColor="@color/input_color"
+                            android:textColorHint="@color/blue" />
+                    </LinearLayout>
+
                     <EditText
-                        android:id="@+id/thirdsowf"
+                        android:id="@+id/thirdadd"
                         android:layout_width="350dp"
                         android:layout_height="45dp"
-                        android:layout_marginTop="8dp"
                         android:background="@drawable/edit_text"
                         android:gravity="center"
-                        android:hint="Chamber's address"
+                        android:hint="Chamber's address (Road no)"
                         android:paddingLeft="10sp"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+                        app:layout_constraintTop_toBottomOf="@+id/thirdautofill" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -1127,37 +1459,65 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout21">
 
                     <TextView
-                        android:id="@+id/textView23"
-                        android:layout_width="180dp"
+                        android:id="@+id/textView73"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_square"
                         android:gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingBottom="5dp"
-                        android:text="Chamber's Times:  "
+                        android:text="Chamber's Hour:  "
                         android:textColor="@color/text_color"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@+id/thirdchmbertime"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/thirdchamerStarttime"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/thirdchmbertime"
-                        android:layout_width="350dp"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/edit_text"
-                        android:gravity="center"
-                        android:hint="Chamber's time"
+                        android:id="@+id/thirdchamerStarttime"
+                        android:layout_width="80dp"
+                        android:layout_height="35sp"
+                        android:background="@drawable/edit_text_two"
+                        android:hint="10"
+                        android:inputType="number"
                         android:paddingLeft="10sp"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/input_color"
+                        android:textColorHint="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textView74"
+                        app:layout_constraintStart_toEndOf="@id/textView73"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView74"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:text="to"
+                        android:textColor="@color/check"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/thirdchamerEndtime"
+                        app:layout_constraintStart_toEndOf="@+id/thirdchamerStarttime"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <EditText
+                        android:id="@+id/thirdchamerEndtime"
+                        android:layout_width="80dp"
+                        android:layout_height="35sp"
+                        android:background="@drawable/edit_text_two"
+                        android:hint="5.00"
+                        android:inputType="number"
+                        android:paddingLeft="10sp"
+                        android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+                        app:layout_constraintStart_toEndOf="@+id/textView74"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -1201,6 +1561,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -1263,16 +1624,33 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/sowner" />
 
-                <Spinner
+                <RadioGroup
                     android:id="@+id/sowner"
                     android:layout_width="200dp"
-                    android:layout_height="40dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layout_shape"
+                    android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView33"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/sownerYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="Same" />
+
+                    <RadioButton
+                        android:id="@+id/sownerNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="Other" />
+                </RadioGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -1310,7 +1688,7 @@
                     android:background="@drawable/edit_text"
                     android:hint="Owner's Name"
                     android:paddingLeft="10sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/input_color"
                     android:textColorHint="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/textView31"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -1354,7 +1732,7 @@
                     android:hint="Phone Number"
                     android:inputType="number"
                     android:paddingLeft="10sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/input_color"
                     android:textColorHint="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/textView32"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -1398,7 +1776,7 @@
                     android:hint="Eamil"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="10sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/input_color"
                     android:textColorHint="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -1433,21 +1811,38 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Spinner
+                <RadioGroup
                     android:id="@+id/tradelicense"
                     android:layout_width="200dp"
-                    android:layout_height="40dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView35"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layout_shape"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView35"
-                    app:layout_constraintTop_toTopOf="@+id/textView35" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/tradeYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/tradeNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="No" />
+                </RadioGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
                 android:id="@+id/commslay"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -1471,22 +1866,40 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Spinner
+                <RadioGroup
                     android:id="@+id/commagreed"
                     android:layout_width="200dp"
-                    android:layout_height="40dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView36"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layout_shape"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView36"
-                    app:layout_constraintTop_toTopOf="@+id/textView36" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/commsYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/commsNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="No" />
+                </RadioGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout29"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/commslay">
@@ -1516,7 +1929,7 @@
                     android:hint="Dimension in Sq ft"
                     android:inputType="number"
                     android:paddingLeft="10sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/input_color"
                     android:textColorHint="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/textView37"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -1550,16 +1963,33 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Spinner
+                <RadioGroup
                     android:id="@+id/brandingInternal"
                     android:layout_width="200dp"
-                    android:layout_height="40dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView38"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layout_shape"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView38"
-                    app:layout_constraintTop_toTopOf="@+id/textView38" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/brandingInternalYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/brandingInternalNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="No" />
+                </RadioGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -1588,16 +2018,33 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Spinner
+                <RadioGroup
                     android:id="@+id/brandingExternal"
                     android:layout_width="200dp"
-                    android:layout_height="40dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView39"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layout_shape"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView39"
-                    app:layout_constraintTop_toTopOf="@+id/textView39" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/brandingExternalYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/brandingExternalNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="No" />
+                </RadioGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -1626,16 +2073,33 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Spinner
+                <RadioGroup
                     android:id="@+id/shopfascia"
                     android:layout_width="200dp"
-                    android:layout_height="40dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView40"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layout_shape"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView40"
-                    app:layout_constraintTop_toTopOf="@+id/textView40" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/shopfasciaYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/shopfasciaNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="No" />
+                </RadioGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -1664,16 +2128,33 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Spinner
+                <RadioGroup
                     android:id="@+id/dsignboard"
                     android:layout_width="200dp"
-                    android:layout_height="40dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView41"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layout_shape"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView41"
-                    app:layout_constraintTop_toTopOf="@+id/textView41" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/dsignboardYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/dsignboardNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/check"
+                        android:text="No" />
+                </RadioGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -1756,6 +2237,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/chamberpic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -1790,11 +2273,12 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/chamberpic"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout36">
 
@@ -1826,6 +2310,26 @@
                     app:layout_constraintTop_toTopOf="@+id/textView45" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/gps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/button_square"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingBottom="5dp"
+                android:paddingEnd="10dp"
+                android:text="Your Gps Location "
+                android:textColor="@color/text_color"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chamberpic"
+                android:paddingRight="10dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

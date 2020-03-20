@@ -7,5 +7,8 @@
     <color name="text_color">#F0F2F0</color>
     <color name="border">#FFEB3B</color>
     <color name="blue">#0832CF</color>
-    <color name="black">#000000</color>
+    <color name="black">#C3B7B7</color>
+    <color name="tittle">#2e3192</color>
+    <color name="check">#4ab7f4</color>
+    <color name="input_color">#222121</color>
 </resources>

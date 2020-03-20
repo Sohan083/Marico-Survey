@@ -14,29 +14,49 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <AutoCompleteTextView
-            android:id="@+id/divisionList"
-            android:layout_width="200dp"
-            android:layout_height="40sp"
-            android:hint="Division"
-            android:textColor="@color/black"
-            android:textColorHint="@color/blue"
-            app:layout_constraintBottom_toTopOf="@+id/districtList"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
 
-        <AutoCompleteTextView
-            android:id="@+id/districtList"
-            android:layout_width="200dp"
-            android:layout_height="40sp"
-            android:hint="District"
-            android:textColor="@color/black"
-            android:textColorHint="@color/blue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divisionList" />
+            <AutoCompleteTextView
+                android:id="@+id/divisionList"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_weight="1"
+                android:hint="Division"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blue"
+                app:layout_constraintBottom_toTopOf="@+id/districtList"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <AutoCompleteTextView
+                android:id="@+id/districtList"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_weight="1"
+                android:hint="District"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blue"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divisionList" />
+            <AutoCompleteTextView
+                android:id="@+id/thanaList"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_weight="1"
+                android:hint="Thana"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blue" />
+        </LinearLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
