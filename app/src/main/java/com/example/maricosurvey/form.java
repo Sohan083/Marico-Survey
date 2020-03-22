@@ -58,7 +58,7 @@ public class form extends AppCompatActivity {
     Intent intent;
 
     Button premisePhoto, cardPhoto, signboardPhoto,chamberPhoto;
-    String premisePhotoPath, cardPhotPath, signboardPhotPath, chamberPhotoPath;
+    String premisePhotoPath = "", cardPhotPath = "", signboardPhotPath= "", chamberPhotoPath= "";
     static String photoName = "", photoName1 = "", photoName2 = "",photoName3 = "", photoName4 = "";
     static String imageString1 = "",imageString2 = "",imageString3 = "",imageString4 = "";
     static Bitmap bitmap1,bitmap2, bitmap3, bitmap4;
@@ -79,14 +79,14 @@ public class form extends AppCompatActivity {
 
     String[] sDropList = new String[] {"Male", "Female"};
     String[] yesnoDropList = new String[] {"N/A", "Yes", "No"};
-    String[] chamberTypesList = new String[] {"Pharmacy", "Hospital", "Clinic", "Stand Alone"};
-    String[] tittleList = new String[] {"DR", "OTHERS"};
-    String[] categoryList = new String[] {"PEDIATRICIAN","CARDIOLOGIST","DERMATOLOGIST","GENERAL PRACTITIONER","GYNECOLOGIST","MEDICINE SPECIALIST","PEDIATRIC SURGERY","OTHERS"};
-    String[] designationList = new String[] {"PROFESSOR", "ASSOCIATE PROFESSOR", "ASSISTANT PROFESSOR", "REGISTER", "SENIOR REGISTER","ASSISTANT REGISTER",
+    String[] chamberTypesList = new String[] {"N/A", "Pharmacy", "Hospital", "Clinic", "Stand Alone", "Other"};
+    String[] tittleList = new String[] {"N/A","DR", "OTHERS"};
+    String[] categoryList = new String[] {"N/A", "PEDIATRICIAN","CARDIOLOGIST","DERMATOLOGIST","GENERAL PRACTITIONER","GYNECOLOGIST","MEDICINE SPECIALIST","PEDIATRIC SURGERY","OTHERS"};
+    String[] designationList = new String[] {"N/A","PROFESSOR", "ASSOCIATE PROFESSOR", "ASSISTANT PROFESSOR", "REGISTER", "SENIOR REGISTER","ASSISTANT REGISTER",
     "CONSULTANT","CONSULTANT HEAD", "SENIOR CONSULTANT","ASSOCIATE CONSULTANT","CHILD SPECIALIST","DEPARTMENTAL HEAD","DEPUTY CO-ORDINATOR, CHRF","EMERGENCY MEDICAL OFFICER",
             "EX-PRINCIPAL & DIRECTOR","PRINCIPAL","DIRECTOR","DEPARTMENT HEAD","IN CHARGE","JUNIOR CONSULTANT","MD RESIDENT","MEDICAL OFFICER","SENIOR MEDICAL OFFICER","PEDIATRIC SURGEON",
             "RESIDENTIAL MEDICAL OFFICER","RESIDENTIAL MEDICAL OFFICER (ENT)","UHFPO","OTHER"};
-    String[] offdayList = new  String[] {"Not applicable", "Saturday","Sunday","Monday","Tuesday","Wednesday", "Thursday","Friday"};
+    String[] offdayList = new  String[] {"N/A", "Saturday","Sunday","Monday","Tuesday","Wednesday", "Thursday","Friday"};
     String chamberNumber = "";
     String[] divisionList = new String[] {"Barisal", "Chittagong", "Dhaka", "Khulna", "Rajshahi", "Rangpur", "Sylhet"};
 
@@ -846,6 +846,75 @@ public class form extends AppCompatActivity {
             }
         });
 
+        commsGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.commsYes:
+                        isCommsagreed = "Yes";
+                        break;
+                    case R.id.commsNo:
+                        isCommsagreed = "No";
+                        break;
+                }
+            }
+        });
+
+        brandingInternalGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.brandingInternalYes:
+                        isbrandingInternal = "Yes";
+                        break;
+                    case R.id.brandingInternalNo:
+                        isbrandingInternal = "No";
+                        break;
+                }
+            }
+        });
+
+        brandingExternalGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.brandingExternalYes:
+                        isbrandingExternal = "Yes";
+                        break;
+                    case R.id.brandingExternalNo:
+                        isbrandingExternal = "No";
+                        break;
+                }
+            }
+        });
+
+        fasciaGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.shopfasciaYes:
+                        isfascia = "Yes";
+                        break;
+                    case R.id.shopfasciaNo:
+                        isfascia = "No";
+                        break;
+                }
+            }
+        });
+
+        signboardGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.dsignboardYes:
+                        isSignboard = "Yes";
+                        break;
+                    case R.id.dsignboardNo:
+                        isSignboard = "No";
+                        break;
+                }
+            }
+        });
 
         premisePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -955,6 +1024,7 @@ public class form extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 doctorName = editdoctorName.getText().toString();
+                Log.e("name",doctorName);
                 doctorAge = editdoctorAge.getText().toString();
                 organizationName = editorganizationName.getText().toString();
                 firstPhoneNumber = editfirstPhoneNumber.getText().toString();
@@ -976,13 +1046,13 @@ public class form extends AppCompatActivity {
                 ownerPhoneNumber = editownerPhoneNumber.getText().toString();
                 dimension = editdimension.getText().toString();
                 remarks = editRemarks.getText().toString();
-                Integer flag = checkAllfields();
-                //Integer flag = 1;
+                //Integer flag = checkAllfields();
+                Integer flag = 0;
                 if(flag == 1 | flag == 2)
                 {
                     CustomUtility.showAlert(form.this,"Please fill the fields" , "Error");
                 }
-                else if(flag == 2)
+                else if(flag == 3)
                 {
                     CustomUtility.showAlert(form.this,"Pleas take the photos","Error");
                 }
@@ -999,8 +1069,7 @@ public class form extends AppCompatActivity {
                         progressDialog.setIndeterminate(true);
                         progressDialog.setCancelable(false);
                         progressDialog.show();
-                        //upload();
-                        //Insert_Daily_attendance_in();
+                        upload();
                     }
                 }
             }
@@ -1040,8 +1109,9 @@ public class form extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             progressDialog.dismiss();
+                            Log.e("upload response","["+response+"]");
                             jsonObject = new JSONObject(response);
-                            String code = jsonObject.getString("code");
+                            String code = jsonObject.getString("success");
                             String message = jsonObject.getString("message");
                             CustomUtility.showAlert(form.this, message, code);
                         } catch (JSONException e) {
@@ -1055,10 +1125,10 @@ public class form extends AppCompatActivity {
                     progressDialog.dismiss();
                     String responseBody = new String(error.networkResponse.data, "utf-8");
                     JSONObject data = new JSONObject(responseBody);
-                    String code = data.getString("code");
+                    String code = data.getString("success");
                     String message = data.getString("message");
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                    CustomUtility.showAlert(form.this, message, "Attendance submit failed");
+                    CustomUtility.showAlert(form.this, message, "Upload failed");
                 } catch (JSONException e) {
                     CustomUtility.showAlert(form.this, e.getMessage(), "Exception e");
 
@@ -1147,14 +1217,15 @@ public class form extends AppCompatActivity {
 
     public Integer checkAllfields()
     {
-        if(doctorName.equals("") | doctorEmail.equals("") | doctorAge.equals("") | doctorSex.equals("") | isBcs.equals("") | designation.equals("") |
-               category.equals("") | privatePractice.equals("") | tittle.equals("") | ariaZipcode.equals("") | organizationName.equals("")| firstPhoneNumber.equals("") | doctorEmail.equals("") | patientPerDay.equals("")
-        | visitFees.equals("") | reVisitFees.equals("") | ownerName.equals("") | ownerPhoneNumber.equals("") | ownerEmail.equals("") | isTradelicense.equals("") | isCommsagreed.equals("") | dimension.equals("")| isbrandingInternal.equals("") |
-         isbrandingExternal.equals("") | isfascia.equals("")| isSignboard.equals("") | (isMbbs.equals("") & isFcps.equals("") & isMd.equals("") & isFrcs.equals("") & isDiploma.equals("") & doctorOtherdegree.equals("")))
+        //Log.e("name",doctorName);
+        if( (doctorName.equals("") | doctorAge.equals("") | doctorSex.equals("") | isBcs.equals("") | designation.equals("") |
+                category.equals("") | privatePractice.equals("") | tittle.equals("") | ariaZipcode.equals("") | organizationName.equals("")| firstPhoneNumber.equals("") | doctorEmail.equals("") | patientPerDay.equals("")
+                | visitFees.equals("") | reVisitFees.equals("") | ownerName.equals("") | ownerPhoneNumber.equals("") | ownerEmail.equals("") | isTradelicense.equals("") | isCommsagreed.equals("") | dimension.equals("")| isbrandingInternal.equals("") |
+                isbrandingExternal.equals("") | isfascia.equals("")| isSignboard.equals("") | (isMbbs.equals("") & isFcps.equals("") & isMd.equals("") & isFrcs.equals("") & isDiploma.equals("") & doctorOtherdegree.equals(""))) )
         {
             return 1;
         }
-        else if(thanaCode1 == -1 | fstchmberType.equals(""))
+        else if((thanaCode1 == -1 | fstchmberType.equals("")))
         {
             return 2;
         }

@@ -373,7 +373,6 @@
                             android:autofillHints="Age"
                             android:background="@drawable/edit_text"
                             android:hint="Other degree  "
-                            android:inputType="number"
                             android:paddingLeft="10sp"
                             android:textColor="@color/input_color"
                             android:textColorHint="@color/black"
