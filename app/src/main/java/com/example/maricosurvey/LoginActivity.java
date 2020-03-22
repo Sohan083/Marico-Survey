@@ -15,6 +15,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String SECURITY_TAG = "Security Permission";
     private static final int REQUEST_Code = 0;
     private int PERMISSION_ALL = 1;
-    public static String code = "", message = "", name = "", uid = "", empID = "", userTypeId = "";
+    public static String code = "", message = "", userid = "";
     private static String[] PERMISSIONS_LIST = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -135,27 +136,22 @@ public class LoginActivity extends AppCompatActivity {
             try {
 
                 jsonObject = new JSONObject(Json_String);
-                jsonArray = jsonObject.getJSONArray("server_response");
-                JSONObject jo = jsonArray.getJSONObject(0);
-                code = jo.getString("code");
-                message = jo.getString("message");
+                //jsonArray = jsonObject.getJSONArray("server_response");
+                //JSONObject jo = jsonArray.getJSONObject(0);
+                code = jsonObject.getString("success");
+                message = jsonObject.getString("message");
+                Log.e("response",code+message);
 
-                if (code.equals("login_true")) {
-                    name = jo.getString("name");
-                    uid = jo.getString("uId");
-                    empID = jo.getString("empId");
-                    userTypeId = jo.getString("uTypeId");
+                if (code.equals("true")) {
+                    userid = edtid.getText().toString();
                     finish();
                     Bundle IDbundle = new Bundle();
-                    IDbundle.putString("name", name);
-                    IDbundle.putString("empid", empID);
-                    IDbundle.putString("uId", uid);
-                    IDbundle.putString("uTypeId", userTypeId);
+                    IDbundle.putString("id", userid);
                     Intent intent = new Intent(getApplicationContext(), form.class);
                     intent.putExtras(IDbundle);
                     startActivity(intent);
                 }
-                else if (code.equals("login_false")) {
+                else if (code.equals("false")) {
 
                     AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
                     alert.setTitle("Login Failed");
@@ -179,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            json_url = "http://imslpro.com/Android/android_login.php";
+            json_url = "https://deenal.com/api/login/login.php";
             progressDialog = new ProgressDialog(LoginActivity.this);
             progressDialog.setTitle("Please wait...");
             progressDialog.setMessage("");
@@ -190,9 +186,9 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... args) {
-            String id, pass;
-            id = args[0];
-            pass = args[1];
+            String LoginName, LoginPass;
+            LoginName = args[0];
+            LoginPass = args[1];
 
             try {
                 URL url = new URL(json_url);
@@ -202,8 +198,8 @@ public class LoginActivity extends AppCompatActivity {
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String data_string = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8") + "&" +
-                        URLEncoder.encode("pass", "UTF-8") + "=" + URLEncoder.encode(pass, "UTF-8") + "&";
+                String data_string = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(LoginName, "UTF-8") + "&" +
+                        URLEncoder.encode("pass", "UTF-8") + "=" + URLEncoder.encode(LoginPass, "UTF-8") + "&";
                 bufferedWriter.write(data_string);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -239,7 +235,7 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             progressDialog.dismiss();
             Json_String = result;
-            //Toast.makeText(getApplicationContext(), "First Get Json\n"+Json_String, Toast.LENGTH_SHORT).show();
+            Log.e("Json",Json_String);
             parseJson();
         }
     }
