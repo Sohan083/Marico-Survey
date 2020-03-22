@@ -116,9 +116,9 @@ public class LoginActivity extends AppCompatActivity {
                                 alert.show();
                             }
                             else {
-                                Intent intent = new Intent(getApplicationContext(), form.class);
-                                startActivity(intent);
-                               // new LoginTask().execute(id, pass);
+                                //Intent intent = new Intent(getApplicationContext(), form.class);
+                               // startActivity(intent);
+                                new LoginTask().execute(id, pass);
                             }
                         }
                         else {
@@ -198,8 +198,8 @@ public class LoginActivity extends AppCompatActivity {
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String data_string = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(LoginName, "UTF-8") + "&" +
-                        URLEncoder.encode("pass", "UTF-8") + "=" + URLEncoder.encode(LoginPass, "UTF-8") + "&";
+                String data_string = URLEncoder.encode("LoginName", "UTF-8") + "=" + URLEncoder.encode(LoginName, "UTF-8") + "&" +
+                        URLEncoder.encode("LoginPass", "UTF-8") + "=" + URLEncoder.encode(LoginPass, "UTF-8") + "&";
                 bufferedWriter.write(data_string);
                 bufferedWriter.flush();
                 bufferedWriter.close();

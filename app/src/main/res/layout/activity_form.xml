@@ -576,7 +576,6 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="9dp"
                     android:background="@drawable/button_square"
                     android:gravity="right"
                     android:paddingLeft="10dp"
@@ -585,7 +584,7 @@
                     android:textColor="@color/text_color"
                     android:textSize="19sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/zipcode"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/tittleDropdown"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -594,47 +593,14 @@
                     android:id="@+id/tittleDropdown"
                     android:layout_width="170dp"
                     android:layout_height="40dp"
+                    android:layout_marginTop="8dp"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown"
-                    app:layout_constraintBottom_toTopOf="@+id/zipcode"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView93"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView100"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_square"
-                    android:gravity="right"
-                    android:paddingLeft="10dp"
-                    android:paddingBottom="5dp"
-                    android:text=" Zip Code: "
-                    android:textColor="@color/text_color"
-                    android:textSize="19sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/zipcode"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView93" />
-
-                <EditText
-                    android:id="@+id/zipcode"
-                    android:layout_width="170dp"
-                    android:layout_height="45dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginRight="2dp"
-                    android:background="@drawable/edit_text"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:hint="Aria zip code"
-                    android:paddingLeft="10sp"
-                    android:textColor="@color/input_color"
-                    android:textColorHint="@color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView93"
-                    app:layout_constraintTop_toBottomOf="@+id/tittleDropdown" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -1125,6 +1091,41 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/firstautofill" />
+
+                    <TextView
+                        android:id="@+id/textView101"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/button_square"
+                        android:gravity="right"
+                        android:paddingLeft="10dp"
+                        android:paddingBottom="5dp"
+                        android:text=" Zip Code: "
+                        android:textColor="@color/text_color"
+                        android:textSize="19sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/fstzipcode"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/firstadd" />
+
+                    <EditText
+                        android:id="@+id/fstzipcode"
+                        android:layout_width="170dp"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/edit_text"
+                        android:gravity="center"
+                        android:hint="Aria zip code"
+                        android:inputType="number"
+                        android:paddingLeft="10sp"
+                        android:textColor="@color/input_color"
+                        android:textColorHint="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView101"
+                        app:layout_constraintTop_toBottomOf="@+id/firstadd" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -1161,7 +1162,6 @@
                         android:layout_height="35sp"
                         android:background="@drawable/edit_text_two"
                         android:hint="10"
-                        android:inputType="number"
                         android:paddingLeft="10sp"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
@@ -1191,7 +1191,6 @@
                         android:layout_height="35sp"
                         android:background="@drawable/edit_text_two"
                         android:hint="5"
-                        android:inputType="number"
                         android:paddingLeft="10sp"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
@@ -1398,10 +1397,44 @@
                         android:paddingLeft="10sp"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/scndzipcode"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/secondautofill" />
+                    <TextView
+                        android:id="@+id/textView102"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/button_square"
+                        android:gravity="right"
+                        android:paddingLeft="10dp"
+                        android:paddingBottom="5dp"
+                        android:text=" Zip Code: "
+                        android:textColor="@color/text_color"
+                        android:textSize="19sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/scndzipcode"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/secondadd" />
+
+                    <EditText
+                        android:id="@+id/scndzipcode"
+                        android:layout_width="170dp"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/edit_text"
+                        android:gravity="center"
+                        android:hint="Aria zip code"
+                        android:inputType="number"
+                        android:paddingLeft="10sp"
+                        android:textColor="@color/input_color"
+                        android:textColorHint="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView102"
+                        app:layout_constraintTop_toBottomOf="@+id/secondadd" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -1438,7 +1471,6 @@
                         android:layout_height="35sp"
                         android:background="@drawable/edit_text_two"
                         android:hint="10"
-                        android:inputType="number"
                         android:paddingLeft="10sp"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
@@ -1467,7 +1499,6 @@
                         android:layout_height="35sp"
                         android:background="@drawable/edit_text_two"
                         android:hint="5"
-                        android:inputType="number"
                         android:paddingLeft="10sp"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
@@ -1665,10 +1696,45 @@
                         android:paddingLeft="10sp"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/thirdzipcode"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/thirdautofill" />
+
+                    <TextView
+                        android:id="@+id/textView103"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/button_square"
+                        android:gravity="right"
+                        android:paddingLeft="10dp"
+                        android:paddingBottom="5dp"
+                        android:text=" Zip Code: "
+                        android:textColor="@color/text_color"
+                        android:textSize="19sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/thirdzipcode"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/thirdadd" />
+
+                    <EditText
+                        android:id="@+id/thirdzipcode"
+                        android:layout_width="170dp"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/edit_text"
+                        android:gravity="center"
+                        android:hint="Aria zip code"
+                        android:inputType="number"
+                        android:paddingLeft="10sp"
+                        android:textColor="@color/input_color"
+                        android:textColorHint="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView103"
+                        app:layout_constraintTop_toBottomOf="@+id/thirdadd" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -1702,7 +1768,6 @@
                         android:layout_height="35sp"
                         android:background="@drawable/edit_text_two"
                         android:hint="10"
-                        android:inputType="number"
                         android:paddingLeft="10sp"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
@@ -1731,7 +1796,6 @@
                         android:layout_height="35sp"
                         android:background="@drawable/edit_text_two"
                         android:hint="5.00"
-                        android:inputType="number"
                         android:paddingLeft="10sp"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
@@ -2401,7 +2465,7 @@
                 app:layout_constraintTop_toBottomOf="@id/signboardlay">
 
                 <TextView
-                    android:id="@+id/textView42"
+                    android:id="@+id/textPremise"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_square"
@@ -2422,10 +2486,10 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/camera"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView42"
+                    app:layout_constraintBottom_toBottomOf="@+id/textPremise"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView42"
-                    app:layout_constraintTop_toTopOf="@+id/textView42" />
+                    app:layout_constraintStart_toEndOf="@+id/textPremise"
+                    app:layout_constraintTop_toTopOf="@+id/textPremise" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -2439,7 +2503,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout33">
 
                 <TextView
-                    android:id="@+id/textView43"
+                    android:id="@+id/textCard"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_square"
@@ -2460,10 +2524,10 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/camera"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView43"
+                    app:layout_constraintBottom_toBottomOf="@+id/textCard"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView43"
-                    app:layout_constraintTop_toTopOf="@+id/textView43" />
+                    app:layout_constraintStart_toEndOf="@+id/textCard"
+                    app:layout_constraintTop_toTopOf="@+id/textCard" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -2479,7 +2543,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout35">
 
                 <TextView
-                    android:id="@+id/textView44"
+                    android:id="@+id/textSignboard"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_square"
@@ -2500,10 +2564,10 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/camera"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView44"
+                    app:layout_constraintBottom_toBottomOf="@+id/textSignboard"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView44"
-                    app:layout_constraintTop_toTopOf="@+id/textView44" />
+                    app:layout_constraintStart_toEndOf="@+id/textSignboard"
+                    app:layout_constraintTop_toTopOf="@+id/textSignboard" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -2517,7 +2581,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout36">
 
                 <TextView
-                    android:id="@+id/textView45"
+                    android:id="@+id/textChamber"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_square"
@@ -2538,10 +2602,10 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/camera"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView45"
+                    app:layout_constraintBottom_toBottomOf="@+id/textChamber"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView45"
-                    app:layout_constraintTop_toTopOf="@+id/textView45" />
+                    app:layout_constraintStart_toEndOf="@+id/textChamber"
+                    app:layout_constraintTop_toTopOf="@+id/textChamber" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <EditText

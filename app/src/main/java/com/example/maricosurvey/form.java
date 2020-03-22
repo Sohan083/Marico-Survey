@@ -33,6 +33,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -76,7 +77,7 @@ public class form extends AppCompatActivity {
 
     public static String presentLat = "", presentLon = "", presentAcc = "";
 
-
+    String temp = "";
     String[] sDropList = new String[] {"Male", "Female"};
     String[] yesnoDropList = new String[] {"N/A", "Yes", "No"};
     String[] chamberTypesList = new String[] {"N/A", "Pharmacy", "Hospital", "Clinic", "Stand Alone", "Other"};
@@ -195,12 +196,12 @@ public class form extends AppCompatActivity {
             "Lalmonirhat", "Nilphamari", "Zila", "Panchagarh", "Rangpur", "Thakurgaon"};
     String[] sylthetDistricList = new String[] {"Habiganj", "Maulvibazar", "Sunamganj", "Sylhet"};
 
-    EditText editdoctorName, editdoctorAge, editorganizationName, editfirstPhoneNumber, editsecondPhoneNumber, editdoctorEmail, editdoctorOtherdegree, editAriaZipcode, editpatientPerDay, editvisitFees, editreVisitFees, editownerName, editownerPhoneNumber, editownerEmail, editdimension,
+    EditText editdoctorName, editdoctorAge, editorganizationName, editfirstPhoneNumber, editsecondPhoneNumber, editdoctorEmail, editdoctorOtherdegree, editAriaZipcode,editAriaZipcode1,editAriaZipcode2,editAriaZipcode3, editpatientPerDay, editvisitFees, editreVisitFees, editownerName, editownerPhoneNumber, editownerEmail, editdimension,
             editfirstAdd, editsecondAdd, editthirdAdd, editRemarks;
     TextView location;
     AutoCompleteTextView autoDivision1, autoDistrict1, autoThana1, autoDivision2, autoDistrict2, autoThana2, autoDivision3, autoDistrict3, autoThana3;
 
-    String doctorName = "", doctorSex = "", doctorAge="", organizationName="", firstPhoneNumber="", secondPhoneNumber="", doctorEmail="", doctorOtherdegree = "", designation= "", category= "", privatePractice= "", tittle= "", ariaZipcode= "", patientPerDay="", visitFees="",
+    String doctorName = "", doctorSex = "Male", doctorAge="", organizationName="", firstPhoneNumber="", secondPhoneNumber="", doctorEmail="", doctorOtherdegree = "", designation= "", category= "", privatePractice= "", tittle= "", fstariaZipcode= "",scndariaZipcode= "",thirdariaZipcode= "", patientPerDay="", visitFees="",
             reVisitFees="", pharmacyOwnerType = "", ownerName="", ownerPhoneNumber="", ownerEmail="", dimension="", fstchmberAdd= "", scndchmberAdd= "", thirdchmberAdd= "", remarks= "";
 
     String isFcps = "", isMbbs = "", isFrcs = "", isMd = "", isDiploma = "", isBcs = "";
@@ -215,6 +216,8 @@ public class form extends AppCompatActivity {
     RadioButton rd;
     String isTradelicense= "", isCommsagreed= "", isbrandingInternal= "", isbrandingExternal= "", isfascia= "", isSignboard= "";
 
+    TextView textPremise, textCard, textSignboard, textChamber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,10 +227,10 @@ public class form extends AppCompatActivity {
 
         intent = new Intent(BROADCAST_ACTION);
 
-        photoName1 = LoginActivity.userid + "_premise"+CustomUtility.getTimeStamp("yyyyMMddhhmmss") + ".jpeg";
-        photoName2 = LoginActivity.userid + "_doctorcard"+CustomUtility.getTimeStamp("yyyyMMddhhmmss") + ".jpeg";
-        photoName3 = LoginActivity.userid + "_signboard"+CustomUtility.getTimeStamp("yyyyMMddhhmmss") + ".jpeg";
-        photoName4 = LoginActivity.userid + "_chamber"+CustomUtility.getTimeStamp("yyyyMMddhhmmss") + ".jpeg";
+        photoName1 = "premise_" + LoginActivity.userid + "_"+CustomUtility.getTimeStamp("yyyyMMddhhmmss") + ".jpg";
+        photoName2 = LoginActivity.userid + "_doctorcard"+CustomUtility.getTimeStamp("yyyyMMddhhmmss") + ".jpg";
+        photoName3 = LoginActivity.userid + "_signboard"+CustomUtility.getTimeStamp("yyyyMMddhhmmss") + ".jpg";
+        photoName4 = LoginActivity.userid + "_chamber"+CustomUtility.getTimeStamp("yyyyMMddhhmmss") + ".jpg";
 
         //auto views;
         autoDivision1 = findViewById(R.id.firstdivisionList);
@@ -289,7 +292,10 @@ public class form extends AppCompatActivity {
         editdoctorEmail = findViewById(R.id.email);
         editdoctorOtherdegree = findViewById(R.id.otherDegree);
         editpatientPerDay = findViewById(R.id.ppd);
-        editAriaZipcode = findViewById(R.id.zipcode);
+        editAriaZipcode1 = findViewById(R.id.fstzipcode);
+        editAriaZipcode2 = findViewById(R.id.scndzipcode);
+        editAriaZipcode3 = findViewById(R.id.thirdzipcode);
+
         editvisitFees = findViewById(R.id.fees);
         editreVisitFees = findViewById(R.id.refees);
         editfirstAdd = findViewById(R.id.firstadd);
@@ -311,6 +317,11 @@ public class form extends AppCompatActivity {
         cardPhoto = findViewById(R.id.picDoctorsCard);
         signboardPhoto = findViewById(R.id.picSignboard);
         chamberPhoto = findViewById(R.id.picChamber);
+
+        textPremise = findViewById(R.id.textPremise);
+        textCard = findViewById(R.id.textCard);
+        textSignboard = findViewById(R.id.textSignboard);
+        textChamber = findViewById(R.id.textChamber);
 
         location = findViewById(R.id.gps);
 
@@ -937,6 +948,8 @@ public class form extends AppCompatActivity {
                                 photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI1);
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                        temp = textPremise.getText().toString() + " Ok";
+                        textPremise.setText(temp);
                     }
                 }
             }
@@ -963,6 +976,8 @@ public class form extends AppCompatActivity {
                                 photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI2);
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                        temp = textCard.getText().toString() + " Ok";
+                        textCard.setText(temp);
                     }
                 }
             }
@@ -989,6 +1004,8 @@ public class form extends AppCompatActivity {
                                 photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI3);
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                        temp = textSignboard.getText().toString() + " Ok";
+                        textSignboard.setText(temp);
                     }
                 }
             }
@@ -1015,6 +1032,8 @@ public class form extends AppCompatActivity {
                                 photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI4);
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                        temp = textChamber.getText().toString() + " Ok";
+                        textChamber.setText(temp);
                     }
                 }
             }
@@ -1031,7 +1050,9 @@ public class form extends AppCompatActivity {
                 secondPhoneNumber = editsecondPhoneNumber.getText().toString();
                 doctorEmail = editdoctorEmail.getText().toString();
                 doctorOtherdegree = editdoctorOtherdegree.getText().toString();
-                ariaZipcode = editAriaZipcode.getText().toString();
+                fstariaZipcode = editAriaZipcode1.getText().toString();
+                scndariaZipcode = editAriaZipcode2.getText().toString();
+                thirdariaZipcode = editAriaZipcode3.getText().toString();
                 patientPerDay = editpatientPerDay.getText().toString();
                 visitFees = editvisitFees.getText().toString();
                 reVisitFees = editreVisitFees.getText().toString();
@@ -1046,8 +1067,8 @@ public class form extends AppCompatActivity {
                 ownerPhoneNumber = editownerPhoneNumber.getText().toString();
                 dimension = editdimension.getText().toString();
                 remarks = editRemarks.getText().toString();
-                //Integer flag = checkAllfields();
-                Integer flag = 0;
+                Integer flag = checkAllfields();
+                //Integer flag = 0;
                 if(flag == 1 | flag == 2)
                 {
                     CustomUtility.showAlert(form.this,"Please fill the fields" , "Error");
@@ -1089,9 +1110,11 @@ public class form extends AppCompatActivity {
         if(!chamberPhotoPath.equals(""))
             uri4 = Uri.fromFile(new File(chamberPhotoPath));
         try {
+            //bitmap1 = CustomUtility.scaleFile(form.this, uri1);
             bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), uri1);
             bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), uri2);
             bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), uri3);
+            if(uri4 != null)
             bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), uri4);
         } catch (IOException e) {
             progressDialog.dismiss();
@@ -1101,47 +1124,41 @@ public class form extends AppCompatActivity {
         imageString1 = CustomUtility.imageToString(bitmap1);
         imageString2 = CustomUtility.imageToString(bitmap2);
         imageString3 = CustomUtility.imageToString(bitmap3);
+        if(uri4 != null)
         imageString4 = CustomUtility.imageToString(bitmap4);
-        String upLoadServerUri = "https://deenal.com/api/doctor/insert_doctor.php";
+        String upLoadServerUri = "http://deenal.com/api/doctor/insert_doctor.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, upLoadServerUri,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             progressDialog.dismiss();
-                            Log.e("upload response","["+response+"]");
                             jsonObject = new JSONObject(response);
                             String code = jsonObject.getString("success");
                             String message = jsonObject.getString("message");
+                            if(code.equals("true")) code = "Uploading done";
                             CustomUtility.showAlert(form.this, message, code);
                         } catch (JSONException e) {
                             CustomUtility.showAlert(form.this, e.getMessage(), "Getting Response");
                         }
                     }
-                }, new Response.ErrorListener() {
+                }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
-                try {
-                    progressDialog.dismiss();
-                    String responseBody = new String(error.networkResponse.data, "utf-8");
-                    JSONObject data = new JSONObject(responseBody);
-                    String code = data.getString("success");
-                    String message = data.getString("message");
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                    CustomUtility.showAlert(form.this, message, "Upload failed");
-                } catch (JSONException e) {
-                    CustomUtility.showAlert(form.this, e.getMessage(), "Exception e");
 
-                } catch (UnsupportedEncodingException errorr) {
-                    CustomUtility.showAlert(form.this, errorr.getMessage(), "Exception error");
-
+                NetworkResponse response = error.networkResponse;
+                String errorMsg = "";
+                if(response != null && response.data != null){
+                    String errorString = new String(response.data);
+                    Log.i("log error", errorString);
                 }
-
             }
-        }) {
+        }
+        ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("UserId", LoginActivity.userid);
                 params.put("Tittle", tittle);
                 params.put("DoctorName", doctorName);
                 params.put("Age", doctorAge);
@@ -1155,7 +1172,7 @@ public class form extends AppCompatActivity {
                 params.put("Category", category);
                 params.put("Designation", designation);
                 params.put("IsPrivatePractice", privatePractice);
-                params.put("AriaZipCode", ariaZipcode);
+                params.put("AriaZipCode", fstariaZipcode);
                 params.put("Organization", organizationName);
                 params.put("DoctorPhone01", firstPhoneNumber);
                 params.put("DoctorPhone02", secondPhoneNumber);
@@ -1192,21 +1209,13 @@ public class form extends AppCompatActivity {
                 params.put("Cham03OffDay", thirdchmberOffday);
                 params.put("Cham03PremiseType", thirdchmberType);
                 params.put("IsAgreedToCommuication", isCommsagreed);
-
-
-
                 params.put("LatValue", presentLat);
                 params.put("LonValue", presentLon);
                 params.put("GeoAccuracy", presentAcc);
-
-                params.put("image_name_premise", photoName1);
-                params.put("image_premise", imageString1);
-                params.put("image_name_doctorcard", photoName2);
-                params.put("image_doctorcard", imageString2);
-                params.put("image_name_signboard", photoName3);
-                params.put("image_signboard", imageString3);
-                params.put("image_name_chamber", photoName4);
-                params.put("image_chamber", imageString4);
+                params.put("PictureSelfieData", imageString1);
+                params.put("PictureDoctorCardData", imageString2);
+                params.put("PicturePremiseFrontData", imageString3);
+                params.put("PictureChamberData", imageString4);
                 return params;
             }
         };
@@ -1219,9 +1228,9 @@ public class form extends AppCompatActivity {
     {
         //Log.e("name",doctorName);
         if( (doctorName.equals("") | doctorAge.equals("") | doctorSex.equals("") | isBcs.equals("") | designation.equals("") |
-                category.equals("") | privatePractice.equals("") | tittle.equals("") | ariaZipcode.equals("") | organizationName.equals("")| firstPhoneNumber.equals("") | doctorEmail.equals("") | patientPerDay.equals("")
-                | visitFees.equals("") | reVisitFees.equals("") | ownerName.equals("") | ownerPhoneNumber.equals("") | ownerEmail.equals("") | isTradelicense.equals("") | isCommsagreed.equals("") | dimension.equals("")| isbrandingInternal.equals("") |
-                isbrandingExternal.equals("") | isfascia.equals("")| isSignboard.equals("") | (isMbbs.equals("") & isFcps.equals("") & isMd.equals("") & isFrcs.equals("") & isDiploma.equals("") & doctorOtherdegree.equals(""))) )
+                category.equals("") | privatePractice.equals("") | tittle.equals("") | fstariaZipcode.equals("") | organizationName.equals("")| firstPhoneNumber.equals("") | doctorEmail.equals("") | patientPerDay.equals("")
+                | visitFees.equals("") | reVisitFees.equals("")| ownerName.equals("") | ownerPhoneNumber.equals("") | ownerEmail.equals("") | isTradelicense.equals("") | isCommsagreed.equals("") | dimension.equals("")| isbrandingInternal.equals("") |
+                isbrandingExternal.equals("") | isfascia.equals("")| isSignboard.equals("") | (isMbbs.equals("") & isFcps.equals("") & isMd.equals("") & isFrcs.equals("") & isDiploma.equals("") & doctorOtherdegree.equals("")) ) )
         {
             return 1;
         }
