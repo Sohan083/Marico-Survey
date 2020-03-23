@@ -68,6 +68,8 @@ public class form extends AppCompatActivity {
     Uri photoURI1, photoURI2, photoURI3, photoURI4;
     static final int REQUEST_IMAGE_CAPTURE = 99;
 
+    Integer premise=0,card=0,sign=0,chamber=0;
+
     ProgressDialog progressDialog;
     JSONObject jsonObject;
     JSONArray jsonArray;
@@ -948,8 +950,13 @@ public class form extends AppCompatActivity {
                                 photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI1);
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                        temp = textPremise.getText().toString() + " Ok";
-                        textPremise.setText(temp);
+                        if(premise == 0)
+                        {
+                            temp = textPremise.getText().toString() + " Ok";
+                            textPremise.setText(temp);
+                            premise++;
+                        }
+
                     }
                 }
             }
@@ -976,8 +983,13 @@ public class form extends AppCompatActivity {
                                 photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI2);
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                        temp = textCard.getText().toString() + " Ok";
-                        textCard.setText(temp);
+                        if(card==0) // checking it will not add "ok" for other time
+                        {
+                            temp = textCard.getText().toString() + " Ok";
+                            textCard.setText(temp);
+                            card++;
+                        }
+
                     }
                 }
             }
@@ -1004,8 +1016,13 @@ public class form extends AppCompatActivity {
                                 photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI3);
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                        temp = textSignboard.getText().toString() + " Ok";
-                        textSignboard.setText(temp);
+                        if(sign==0)
+                        {
+                            temp = textSignboard.getText().toString() + " Ok";
+                            textSignboard.setText(temp);
+                            sign++;
+                        }
+
                     }
                 }
             }
@@ -1032,8 +1049,11 @@ public class form extends AppCompatActivity {
                                 photoFile);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI4);
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                        temp = textChamber.getText().toString() + " Ok";
-                        textChamber.setText(temp);
+                        if(chamber==0)
+                        {
+                            temp = textChamber.getText().toString() + " Ok";
+                            textChamber.setText(temp);
+                        }
                     }
                 }
             }
