@@ -1,8 +1,10 @@
 package com.example.maricosurvey;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -96,7 +98,7 @@ public class form extends AppCompatActivity {
     String[] districtList = new String[]{"Barguna", "Barisal", "Bhola", "Jhalokati", "Patuakhali", "Pirojpur", "Bandarban", "Brahmanbaria", "Chandpur", "Chittagong", "Comilla", "Cox's Bazar",
             "Feni", "Khagrachhari", "Lakshmipur", "Noakhali", "Rangamati", "Dhaka", "Faridpur", "Gazipur", "Gopalganj", "Jamalpur", "Kishoregonj", "Madaripur",
             "Manikganj", "Munshiganj", "Mymensingh", "Narayanganj", "Narsingdi", "Netrakona", "Rajbari", "Shariatpur", "Sherpur", "Tangail", "Bagerhat", "Chuadanga", "Jessore", "Jhenaidah", "Khulna",
-            "Kushtia", "Magura", "Meherpur", "Narail", "Satkhira", "Bogra", "Joypurhat", "Naogaon", "Natore", "Chapai", "Nababganj", "Pabna", "Rajshahi", "Sirajganj", "Dinajpur", "Gaibandha", "Kurigram",
+            "Kushtia", "Magura", "Meherpur", "Narail", "Satkhira", "Bogra", "Joypurhat", "Naogaon", "Natore", "Chapai Nababganj", "Pabna", "Rajshahi", "Sirajganj", "Dinajpur", "Gaibandha", "Kurigram",
             "Lalmonirhat", "Nilphamari", "Zila", "Panchagarh", "Rangpur", "Thakurgaon", "Habiganj", "Maulvibazar", "Sunamganj", "Sylhet"};
 
 
@@ -219,7 +221,7 @@ public class form extends AppCompatActivity {
     String isTradelicense= "", isCommsagreed= "", isbrandingInternal= "", isbrandingExternal= "", isfascia= "", isSignboard= "";
 
     TextView textPremise, textCard, textSignboard, textChamber;
-
+    String user = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -328,6 +330,9 @@ public class form extends AppCompatActivity {
         location = findViewById(R.id.gps);
 
         Button submit = findViewById(R.id.submitbutton);
+
+        //Bundle extras = getIntent().getExtras();
+        //user = extras.getString("id");
 
         //all spinner adapter
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, sDropList);
@@ -952,6 +957,7 @@ public class form extends AppCompatActivity {
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                         if(premise == 0)
                         {
+                            textPremise.setBackgroundResource(R.drawable.ok_button_square);
                             temp = textPremise.getText().toString() + " Ok";
                             textPremise.setText(temp);
                             premise++;
@@ -985,6 +991,7 @@ public class form extends AppCompatActivity {
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                         if(card==0) // checking it will not add "ok" for other time
                         {
+                            textCard.setBackgroundResource(R.drawable.ok_button_square);
                             temp = textCard.getText().toString() + " Ok";
                             textCard.setText(temp);
                             card++;
@@ -1018,6 +1025,7 @@ public class form extends AppCompatActivity {
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                         if(sign==0)
                         {
+                            textSignboard.setBackgroundResource(R.drawable.ok_button_square);
                             temp = textSignboard.getText().toString() + " Ok";
                             textSignboard.setText(temp);
                             sign++;
@@ -1051,6 +1059,7 @@ public class form extends AppCompatActivity {
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                         if(chamber==0)
                         {
+                            textChamber.setBackgroundResource(R.drawable.ok_button_square);
                             temp = textChamber.getText().toString() + " Ok";
                             textChamber.setText(temp);
                         }
@@ -1156,8 +1165,13 @@ public class form extends AppCompatActivity {
                             jsonObject = new JSONObject(response);
                             String code = jsonObject.getString("success");
                             String message = jsonObject.getString("message");
-                            if(code.equals("true")) code = "Uploading done";
+                            if(code.equals("true"))
+                            {
+                                code = "Uploading done";
+                            }
                             CustomUtility.showAlert(form.this, message, code);
+                            finish();
+                            startActivity(getIntent());
                         } catch (JSONException e) {
                             CustomUtility.showAlert(form.this, e.getMessage(), "Getting Response");
                         }
@@ -1397,6 +1411,24 @@ public class form extends AppCompatActivity {
         public void onStatusChanged(String provider, int status, Bundle extras) {
             Toast.makeText(getApplicationContext(), "Status Changed", Toast.LENGTH_SHORT).show();
         }
+    }
+
+   @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Closing the application")
+                .setMessage("Are you sure you want to close this application?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
 

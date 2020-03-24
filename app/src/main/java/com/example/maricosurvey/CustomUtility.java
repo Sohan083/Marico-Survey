@@ -32,7 +32,8 @@ public class CustomUtility {
     public static String imageToString(Bitmap bitmap)
     {
         ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,1,byteArrayOutputStream);
+        bitmap = Bitmap.createScaledBitmap(bitmap,1280,800,false);
+        bitmap.compress(Bitmap.CompressFormat.JPEG,30,byteArrayOutputStream);
         byte[] imgBytes=byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(imgBytes,Base64.DEFAULT);
     }

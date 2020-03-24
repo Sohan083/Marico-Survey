@@ -144,12 +144,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (code.equals("true")) {
                     userid = edtid.getText().toString();
-                    finish();
                     Bundle IDbundle = new Bundle();
                     IDbundle.putString("id", userid);
                     Intent intent = new Intent(getApplicationContext(), form.class);
                     intent.putExtras(IDbundle);
                     startActivity(intent);
+                    finish();
                 }
                 else if (code.equals("false")) {
 
