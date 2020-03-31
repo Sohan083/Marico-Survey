@@ -35,6 +35,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -53,6 +54,7 @@ import java.util.Map;
 
 public class form extends AppCompatActivity {
 
+    private static final int MY_PERMISSIONS_REQUEST = 0;
     public LocationManager locationManager;
     public GPSLocationListener listener;
     public Location previousBestLocation = null;
@@ -87,7 +89,7 @@ public class form extends AppCompatActivity {
     String[] chamberTypesList = new String[] {"N/A", "Pharmacy", "Hospital", "Clinic", "Stand Alone", "Other"};
     String[] tittleList = new String[] {"N/A","DR", "OTHERS"};
     String[] categoryList = new String[] {"N/A", "PEDIATRICIAN","CARDIOLOGIST","DERMATOLOGIST","GENERAL PRACTITIONER","GYNECOLOGIST","MEDICINE SPECIALIST","PEDIATRIC SURGERY","OTHERS"};
-    String[] designationList = new String[] {"N/A","PROFESSOR", "ASSOCIATE PROFESSOR", "ASSISTANT PROFESSOR", "REGISTER", "SENIOR REGISTER","ASSISTANT REGISTER",
+    String[] designationList = new String[] {"N/A","PROFESSOR", "ASSOCIATE PROFESSOR", "ASSISTANT PROFESSOR", "REGISTRAR", "SENIOR REGISTRAR","ASSISTANT REGISTRAR",
     "CONSULTANT","CONSULTANT HEAD", "SENIOR CONSULTANT","ASSOCIATE CONSULTANT","CHILD SPECIALIST","DEPARTMENTAL HEAD","DEPUTY CO-ORDINATOR, CHRF","EMERGENCY MEDICAL OFFICER",
             "EX-PRINCIPAL & DIRECTOR","PRINCIPAL","DIRECTOR","DEPARTMENT HEAD","IN CHARGE","JUNIOR CONSULTANT","MD RESIDENT","MEDICAL OFFICER","SENIOR MEDICAL OFFICER","PEDIATRIC SURGEON",
             "RESIDENTIAL MEDICAL OFFICER","RESIDENTIAL MEDICAL OFFICER (ENT)","UHFPO","OTHER"};
@@ -195,7 +197,7 @@ public class form extends AppCompatActivity {
             "Manikganj", "Munshiganj", "Mymensingh", "Narayanganj", "Narsingdi", "Netrakona", "Rajbari", "Shariatpur", "Sherpur", "Tangail"};
     String[] khulnaDistricList = new String[] {"Bagerhat", "Chuadanga", "Jessore", "Jhenaidah", "Khulna",
             "Kushtia", "Magura", "Meherpur", "Narail", "Satkhira"};
-    String[] rajshahiDistricList = new String[] {"Bogra", "Joypurhat", "Naogaon", "Natore", "Chapai", "Nababganj", "Pabna", "Rajshahi", "Sirajganj"};
+    String[] rajshahiDistricList = new String[] {"Bogra", "Joypurhat", "Naogaon", "Natore", "Chapai Nababganj", "Pabna", "Rajshahi", "Sirajganj"};
     String[] rangpurDistricList = new String[] {"Dinajpur", "Gaibandha", "Kurigram",
             "Lalmonirhat", "Nilphamari", "Zila", "Panchagarh", "Rangpur", "Thakurgaon"};
     String[] sylthetDistricList = new String[] {"Habiganj", "Maulvibazar", "Sunamganj", "Sylhet"};
@@ -227,6 +229,18 @@ public class form extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            Log.e("Permission","Storage permission already granted");
+        }
+        else {
+            //Permission is not granted so you have to request it
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST);
+            Log.e("Permission","Requesting for storage permission");
+        }
         Log.e("thana list size", String.valueOf(thanaList.length));
 
         intent = new Intent(BROADCAST_ACTION);
@@ -1072,7 +1086,7 @@ public class form extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 doctorName = editdoctorName.getText().toString();
-                Log.e("name",doctorName);
+                Log.e("designation",designation);
                 doctorAge = editdoctorAge.getText().toString();
                 organizationName = editorganizationName.getText().toString();
                 firstPhoneNumber = editfirstPhoneNumber.getText().toString();
@@ -1085,6 +1099,9 @@ public class form extends AppCompatActivity {
                 patientPerDay = editpatientPerDay.getText().toString();
                 visitFees = editvisitFees.getText().toString();
                 reVisitFees = editreVisitFees.getText().toString();
+                fstchmberAdd = editfirstAdd.getText().toString();
+                scndchmberAdd = editsecondAdd.getText().toString();
+                thirdchmberAdd = editthirdAdd.getText().toString();
                 fstchmberStarttime = edtfstStart.getText().toString();
                 fstchmberEndtime = edtfstEnd.getText().toString();
                 scndchmberStarttime = edtscndStart.getText().toString();
@@ -1097,29 +1114,36 @@ public class form extends AppCompatActivity {
                 dimension = editdimension.getText().toString();
                 remarks = editRemarks.getText().toString();
                 Integer flag = checkAllfields();
-                //Integer flag = 0;
-                if(flag == 1 | flag == 2)
-                {
-                    CustomUtility.showAlert(form.this,"Please fill the fields" , "Error");
-                }
-                else if(flag == 3)
-                {
-                    CustomUtility.showAlert(form.this,"Pleas take the photos","Error");
-                }
-                else{
+                firstPhoneNumber = "+88" + firstPhoneNumber;
+                Log.e("first phone", firstPhoneNumber);
+                if(secondPhoneNumber.length() != 0) secondPhoneNumber = "+88" + secondPhoneNumber;
+                if(ownerPhoneNumber.length() != 0 & ownerPhoneNumber.length() == 11) ownerPhoneNumber = "+88" + ownerPhoneNumber;
+                if(flag == 0 ) {
                     if (ContextCompat.checkSelfPermission(form.this, Manifest.permission.INTERNET)
                             != PackageManager.PERMISSION_GRANTED) {
                         // Permission is not granted
                         Log.e("DXXXXXXXXXX", "Not Granted");
                         CustomUtility.showAlert(form.this, "Permission not granted", "Permission");
                     } else {
-                        progressDialog = new ProgressDialog(form.this);
-                        progressDialog.setTitle("Please wait...");
-                        progressDialog.setMessage("Uploading");
-                        progressDialog.setIndeterminate(true);
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
-                        upload();
+                        new AlertDialog.Builder(form.this)
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .setTitle("Are You Sure?")
+                                .setMessage("Are you sure you want to submit?")
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        progressDialog = new ProgressDialog(form.this);
+                                        progressDialog.setTitle("Please wait...");
+                                        progressDialog.setMessage("Uploading");
+                                        progressDialog.setIndeterminate(true);
+                                        progressDialog.setCancelable(false);
+                                        progressDialog.show();
+                                        upload();
+                                    }
+
+                                })
+                                .setNegativeButton("No", null)
+                                .show();
                     }
                 }
             }
@@ -1147,7 +1171,8 @@ public class form extends AppCompatActivity {
             bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), uri4);
         } catch (IOException e) {
             progressDialog.dismiss();
-            CustomUtility.showAlert(form.this, e.getMessage(), "Creating Bitmap at Submit");
+            String err = e.getMessage() + " May be storage full please uninstall then install the app again";
+            CustomUtility.showAlert(form.this, e.getMessage(), "Problem Creating Bitmap at Submit");
             return;
         }
         imageString1 = CustomUtility.imageToString(bitmap1);
@@ -1160,18 +1185,37 @@ public class form extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        progressDialog.dismiss();
                         try {
-                            progressDialog.dismiss();
                             jsonObject = new JSONObject(response);
                             String code = jsonObject.getString("success");
                             String message = jsonObject.getString("message");
                             if(code.equals("true"))
                             {
                                 code = "Uploading done";
+                                new AlertDialog.Builder(form.this)
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .setTitle("Your upload is done")
+                                        .setMessage("Refreshing this form")
+                                        .setPositiveButton("Ok", new DialogInterface.OnClickListener()
+                                        {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                finish();
+                                                startActivity(getIntent());
+                                            }
+
+                                        })
+                                        //.setNegativeButton("No", null)
+                                        .show();
                             }
-                            CustomUtility.showAlert(form.this, message, code);
-                            finish();
-                            startActivity(getIntent());
+                            else
+                            {
+                                code = "Uploading fails";
+                                CustomUtility.showAlert(form.this,message,code);
+                            }
+
+
                         } catch (JSONException e) {
                             CustomUtility.showAlert(form.this, e.getMessage(), "Getting Response");
                         }
@@ -1179,12 +1223,16 @@ public class form extends AppCompatActivity {
                 }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                progressDialog.dismiss();
+                Log.e("response","onerrorResponse");
+                CustomUtility.showAlert(form.this, "Network slow, try again", "Getting Error Response");
                 NetworkResponse response = error.networkResponse;
                 String errorMsg = "";
+                Log.e("response", String.valueOf(response));
                 if(response != null && response.data != null){
                     String errorString = new String(response.data);
                     Log.i("log error", errorString);
+                    CustomUtility.showAlert(form.this, errorString + " try again", "Getting Error Response");
                 }
             }
         }
@@ -1192,7 +1240,6 @@ public class form extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("UserId", LoginActivity.userid);
                 params.put("Tittle", tittle);
                 params.put("DoctorName", doctorName);
                 params.put("Age", doctorAge);
@@ -1250,10 +1297,11 @@ public class form extends AppCompatActivity {
                 params.put("PictureDoctorCardData", imageString2);
                 params.put("PicturePremiseFrontData", imageString3);
                 params.put("PictureChamberData", imageString4);
+                params.put("CreatedBy",LoginActivity.userid);
                 return params;
             }
         };
-
+      //  stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         MySingleton.getInstance(form.this).addToRequestQue(stringRequest);
     }
 
@@ -1261,20 +1309,119 @@ public class form extends AppCompatActivity {
     public Integer checkAllfields()
     {
         //Log.e("name",doctorName);
-        if( (doctorName.equals("") | doctorAge.equals("") | doctorSex.equals("") | isBcs.equals("") | designation.equals("") |
-                category.equals("") | privatePractice.equals("") | tittle.equals("") | fstariaZipcode.equals("") | organizationName.equals("")| firstPhoneNumber.equals("") | doctorEmail.equals("") | patientPerDay.equals("")
-                | visitFees.equals("") | reVisitFees.equals("")| ownerName.equals("") | ownerPhoneNumber.equals("") | ownerEmail.equals("") | isTradelicense.equals("") | isCommsagreed.equals("") | dimension.equals("")| isbrandingInternal.equals("") |
-                isbrandingExternal.equals("") | isfascia.equals("")| isSignboard.equals("") | (isMbbs.equals("") & isFcps.equals("") & isMd.equals("") & isFrcs.equals("") & isDiploma.equals("") & doctorOtherdegree.equals("")) ) )
+        if (doctorName.equals(""))
         {
+            CustomUtility.showAlert(this, "Please fill doctor's name","Fill the feilds");
             return 1;
         }
-        else if((thanaCode1 == -1 | fstchmberType.equals("")))
+        else if(doctorAge.equals(""))
         {
-            return 2;
+            CustomUtility.showAlert(this, "Please fill doctor's age","Fill the feilds");
+            return 1;
         }
-        else if(premisePhotoPath.equals("") | cardPhotPath.equals("") | signboardPhotPath.equals(""))
+        else if(doctorSex.equals(""))
         {
-            return 3;
+            CustomUtility.showAlert(this, "Please select doctor's sex","Select the feilds");
+            return 1;
+        }
+        else if((isMbbs.equals("") & isFcps.equals("") & isMd.equals("") & isFrcs.equals("") & isDiploma.equals("") & doctorOtherdegree.equals("")))
+        {
+            CustomUtility.showAlert(this, "Please select doctor's degree","Fill the feilds");
+            return 1;
+        }else if(isBcs.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please fill doctor has done bcs or not","Fill the feilds");
+            return 1;
+        }
+        else if(designation.equals("N/A"))
+        {
+            CustomUtility.showAlert(this, "Please fill doctor's designation","Fill the feilds");
+            return 1;
+        }
+        else if(category.equals("N/A"))
+        {
+            CustomUtility.showAlert(this, "Please fill doctor's category","Fill the feilds");
+            return 1;
+        }
+        else if(privatePractice.equals("N/A"))
+        {
+            CustomUtility.showAlert(this, "Please select doctor doing private practice or not","Fill the feilds");
+            return 1;
+        }
+        else if(organizationName.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please fill doctor's organization name","Fill the feilds");
+            return 1;
+        }
+        else if(firstPhoneNumber.length() != 11)
+        {
+            CustomUtility.showAlert(this, "Please fill doctor's 1st phone number correctly","Fill the feilds");
+            return 1;
+        }
+        else if(patientPerDay.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please fill doctor's patient/day","Fill the feilds");
+            return 1;
+        }
+        else if(visitFees.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please fill doctor's visit fees","Fill the feilds");
+            return 1;
+        }
+        else if(reVisitFees.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please fill doctor's revisit fees","Fill the feilds");
+            return 1;
+        }
+        else if(thanaCode1 == -1)
+        {
+            CustomUtility.showAlert(this, "Please fill 1st chmaber's address","Fill the feilds");
+            return 1;
+        }
+        else if(fstchmberAdd.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please fill 1st chamber's address(road no)","Fill the feilds");
+            return 1;
+        }
+        else if(fstariaZipcode.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please fill 1st chamber's aria zipcode","Fill the feilds");
+            return 1;
+        }
+        else if(isCommsagreed.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please select doctor comms agreed or not","Fill the feilds");
+            return 1;
+        }
+        else if(isbrandingExternal.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please select pharmacy has branding scope external or not","Fill the feilds");
+            return 1;
+        }
+        else if(isfascia.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please select pharmacy has shop fascia or not","Fill the feilds");
+            return 1;
+        }
+        else if(isSignboard.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please select doctor has signboard or not","Fill the feilds");
+            return 1;
+        }
+        else if(premisePhotoPath.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please take a selfie with the premise","Take the picture");
+            return 1;
+        }
+        else if(cardPhotPath.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please take a photo of doctor's visiting card","Take the picture");
+            return 1;
+        }
+        else if(signboardPhotPath.equals(""))
+        {
+            CustomUtility.showAlert(this, "Please take a picture of signboard","Take the picture");
+            return 1;
         }
         return 0;
     }
@@ -1409,7 +1556,7 @@ public class form extends AppCompatActivity {
         }
 
         public void onStatusChanged(String provider, int status, Bundle extras) {
-            Toast.makeText(getApplicationContext(), "Status Changed", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Status Changed", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -32,7 +32,10 @@ public class CustomUtility {
     public static String imageToString(Bitmap bitmap)
     {
         ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
-        bitmap = Bitmap.createScaledBitmap(bitmap,1280,800,false);
+        float aspectRatio = bitmap.getWidth() / (float)bitmap.getHeight();
+        int width = 1280;
+        int height = Math.round(width / aspectRatio);
+        bitmap = Bitmap.createScaledBitmap(bitmap,width,height,false);
         bitmap.compress(Bitmap.CompressFormat.JPEG,30,byteArrayOutputStream);
         byte[] imgBytes=byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(imgBytes,Base64.DEFAULT);
