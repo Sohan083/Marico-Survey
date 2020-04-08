@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -46,9 +47,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +73,7 @@ public class form extends AppCompatActivity {
     public static final String BROADCAST_ACTION = "gps_data";
     Intent intent;
 
-    Button premisePhoto, cardPhoto, signboardPhoto,chamberPhoto;
+    Button btnDisclaimer, premisePhoto, cardPhoto, signboardPhoto,chamberPhoto;
     String premisePhotoPath = "", cardPhotPath = "", signboardPhotPath= "", chamberPhotoPath= "";
     static String photoName = "", photoName1 = "", photoName2 = "",photoName3 = "", photoName4 = "";
     static String imageString1 = "",imageString2 = "",imageString3 = "",imageString4 = "";
@@ -77,7 +88,9 @@ public class form extends AppCompatActivity {
     ProgressDialog progressDialog;
     JSONObject jsonObject;
     JSONArray jsonArray;
-
+    JSONObject jsonObj;
+    JSONArray jsonArr;
+    String Json_String;
     String division, district, thana;
     Integer divisionStartIndex, divisionEndIndex, thanaCode1=-1, thanaCode2=-1, thanaCode3=-1;
 
@@ -204,10 +217,10 @@ public class form extends AppCompatActivity {
 
     EditText editdoctorName, editdoctorAge, editorganizationName, editfirstPhoneNumber, editsecondPhoneNumber, editdoctorEmail, editdoctorOtherdegree, editAriaZipcode,editAriaZipcode1,editAriaZipcode2,editAriaZipcode3, editpatientPerDay, editvisitFees, editreVisitFees, editownerName, editownerPhoneNumber, editownerEmail, editdimension,
             editfirstAdd, editsecondAdd, editthirdAdd, editRemarks;
-    TextView location;
+    TextView location,todayVisit,totalVisit;
     AutoCompleteTextView autoDivision1, autoDistrict1, autoThana1, autoDivision2, autoDistrict2, autoThana2, autoDivision3, autoDistrict3, autoThana3;
 
-    String doctorName = "", doctorSex = "Male", doctorAge="", organizationName="", firstPhoneNumber="", secondPhoneNumber="", doctorEmail="", doctorOtherdegree = "", designation= "", category= "", privatePractice= "", tittle= "", fstariaZipcode= "",scndariaZipcode= "",thirdariaZipcode= "", patientPerDay="", visitFees="",
+    String doctorDisclaimer = "", doctorName = "", doctorSex = "Male", doctorAge="", organizationName="", firstPhoneNumber="", secondPhoneNumber="", doctorEmail="", doctorOtherdegree = "", designation= "", category= "", privatePractice= "", tittle= "", fstariaZipcode= "",scndariaZipcode= "",thirdariaZipcode= "", patientPerDay="", visitFees="",
             reVisitFees="", pharmacyOwnerType = "", ownerName="", ownerPhoneNumber="", ownerEmail="", dimension="", fstchmberAdd= "", scndchmberAdd= "", thirdchmberAdd= "", remarks= "";
 
     String isFcps = "", isMbbs = "", isFrcs = "", isMd = "", isDiploma = "", isBcs = "";
@@ -244,6 +257,13 @@ public class form extends AppCompatActivity {
         Log.e("thana list size", String.valueOf(thanaList.length));
 
         intent = new Intent(BROADCAST_ACTION);
+
+        todayVisit = findViewById(R.id.todayVisit);
+        totalVisit = findViewById(R.id.totalVisit);
+
+        new getTargetAchievement().execute();
+
+        btnDisclaimer = findViewById(R.id.disclaimer);
 
         photoName1 = "premise_" + LoginActivity.userid + "_"+CustomUtility.getTimeStamp("yyyyMMddhhmmss") + ".jpg";
         photoName2 = LoginActivity.userid + "_doctorcard"+CustomUtility.getTimeStamp("yyyyMMddhhmmss") + ".jpg";
@@ -372,6 +392,35 @@ public class form extends AppCompatActivity {
 
         GPS_Start();
 
+
+        btnDisclaimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(form.this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Consent")
+                        .setMessage("All the data that is being collected for this process will be shared with Marico on a real time basis.\n" +
+                                "Upon completion of project, Marico shall audit the authenticity of the data by any means considered appropriate by Marico and only upon ensuring that the data shared are correct and authentic, Interspeed will be entitled to receive the payment.\n" +
+                                "In addition to real time sharing of data, all the data collected during the process will be shared with Marico in a consolidated form once the survey is complete.\n" +
+                                "Marico Bangladesh Limited shall have right over this data during and upon completion of the project and this data cannot be shared with any other party by Interspeed.\n" +
+                                "Marico holds the right to use the information from the data collected for any future project it deems relevant.\"")
+                        .setPositiveButton("Agree", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                doctorDisclaimer = "Agree";
+                            }
+
+                        })
+                        .setNegativeButton("Disagree", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                doctorDisclaimer = "Disagree";
+                            }
+                        })
+                        .show();
+            }
+        });
 
         rd = findViewById(R.id.ch1);
 
@@ -681,7 +730,7 @@ public class form extends AppCompatActivity {
                     }
                 }
                 thanaCode1 = pos;
-                Log.e("Position", pos.toString());
+                Log.e("Position", thanaCode1.toString());
             }
         });
 
@@ -1116,7 +1165,7 @@ public class form extends AppCompatActivity {
                 Integer flag = checkAllfields();
                 firstPhoneNumber = "+88" + firstPhoneNumber;
                 Log.e("first phone", firstPhoneNumber);
-                if(secondPhoneNumber.length() != 0) secondPhoneNumber = "+88" + secondPhoneNumber;
+                if(secondPhoneNumber.length() != 0 & ownerPhoneNumber.length() == 11) secondPhoneNumber = "+88" + secondPhoneNumber;
                 if(ownerPhoneNumber.length() != 0 & ownerPhoneNumber.length() == 11) ownerPhoneNumber = "+88" + ownerPhoneNumber;
                 if(flag == 0 ) {
                     if (ContextCompat.checkSelfPermission(form.this, Manifest.permission.INTERNET)
@@ -1180,12 +1229,13 @@ public class form extends AppCompatActivity {
         imageString3 = CustomUtility.imageToString(bitmap3);
         if(uri4 != null)
         imageString4 = CustomUtility.imageToString(bitmap4);
-        String upLoadServerUri = "http://deenal.com/api/doctor/insert_doctor.php";
+        String upLoadServerUri = "https://deenal.com/api/doctor/insert_doctor.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, upLoadServerUri,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
+                        Log.e("response",response);
                         try {
                             jsonObject = new JSONObject(response);
                             String code = jsonObject.getString("success");
@@ -1241,6 +1291,7 @@ public class form extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("Tittle", tittle);
+                params.put("isConsent", doctorDisclaimer);
                 params.put("DoctorName", doctorName);
                 params.put("Age", doctorAge);
                 params.put("Sex", doctorSex);
@@ -1250,6 +1301,7 @@ public class form extends AppCompatActivity {
                 params.put("IsMD", isMd);
                 params.put("IsDiploma", isDiploma);
                 params.put("IsBcs", isBcs);
+                params.put("otherDegree", doctorOtherdegree);
                 params.put("Category", category);
                 params.put("Designation", designation);
                 params.put("IsPrivatePractice", privatePractice);
@@ -1263,7 +1315,9 @@ public class form extends AppCompatActivity {
                 params.put("RevisitFees", reVisitFees);
                 params.put("PharmacyOwnerType", pharmacyOwnerType);
                 params.put("Cham01Address", fstchmberAdd);
-                params.put("Cham01ThanId", thanaCode1.toString());
+                params.put("Cham01Name",organizationName);
+                params.put("Cham01ZipCode",fstariaZipcode);
+                params.put("Cham01ThanaId", thanaCode1.toString());
                 params.put("Cham01TimeStart", fstchmberStarttime);
                 params.put("Cham01TimeEnd", fstchmberEndtime);
                 params.put("Cham01OffDay", fstchmberOffday);
@@ -1279,17 +1333,19 @@ public class form extends AppCompatActivity {
                 params.put("Cham01HasDoctorSignboard", isSignboard);
                 params.put("Cham02Address", scndchmberAdd);
                 params.put("Cham02ThanId", thanaCode2.toString());
+                params.put("Cham02ZipCode",scndariaZipcode);
                 params.put("Cham02TimeStart", scndchmberStarttime);
                 params.put("Cham02TimeEnd", scndchmberEndtime);
                 params.put("Cham02OffDay", scndchmberOffday);
                 params.put("Cham02PremiseType", scndchmberType);
                 params.put("Cham03Address", thirdchmberAdd);
                 params.put("Cham03ThanId", thanaCode3.toString());
+                params.put("Cham03ZipCode",thirdariaZipcode);
                 params.put("Cham03TimeStart", thirdchmberStarttime);
                 params.put("Cham03TimeEnd", thirdchmberEndtime);
                 params.put("Cham03OffDay", thirdchmberOffday);
                 params.put("Cham03PremiseType", thirdchmberType);
-                params.put("IsAgreedToCommuication", isCommsagreed);
+                params.put("IsAgreedToCommunication", isCommsagreed);
                 params.put("LatValue", presentLat);
                 params.put("LonValue", presentLon);
                 params.put("GeoAccuracy", presentAcc);
@@ -1297,11 +1353,14 @@ public class form extends AppCompatActivity {
                 params.put("PictureDoctorCardData", imageString2);
                 params.put("PicturePremiseFrontData", imageString3);
                 params.put("PictureChamberData", imageString4);
-                params.put("CreatedBy",LoginActivity.userid);
+                params.put("CreatedBy",LoginActivity.id);
                 return params;
             }
         };
-      //  stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         MySingleton.getInstance(form.this).addToRequestQue(stringRequest);
     }
 
@@ -1356,6 +1415,11 @@ public class form extends AppCompatActivity {
         else if(firstPhoneNumber.length() != 11)
         {
             CustomUtility.showAlert(this, "Please fill doctor's 1st phone number correctly","Fill the feilds");
+            return 1;
+        }
+        else if(secondPhoneNumber.length() != 0 & secondPhoneNumber.length() != 11)
+        {
+            CustomUtility.showAlert(this, "Please fill doctor's 2nd phone number correctly","Fill the feilds");
             return 1;
         }
         else if(patientPerDay.equals(""))
@@ -1559,6 +1623,99 @@ public class form extends AppCompatActivity {
             //Toast.makeText(getApplicationContext(), "Status Changed", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void parseJson(String json) {
+        if (json == null) {
+            Log.e("Json", "First Get Json\n" + json);
+        } else {
+            try {
+                Log.e("Json", "Json\n" + json);
+                jsonObj = new JSONObject(json);
+                String success = jsonObj.getString("success");
+
+                if(success.equals("true"))
+                {
+                    String today_count = jsonObj.getString("todayCount");
+                    String total_count = jsonObj.getString("totalCount");
+                    Log.e("total count",total_count);
+                    Log.e("today count",today_count);
+                    todayVisit.setText(today_count);
+                    totalVisit.setText(total_count);
+                }
+                else
+                {
+                    CustomUtility.showAlert(this, "Error finding your visit count", "Error");
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    class getTargetAchievement extends AsyncTask<String, Void, String> {
+
+        String json_url;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            json_url = "https://deenal.com/api/doctor/user_status.php";
+            progressDialog = new ProgressDialog(form.this);
+            progressDialog.setTitle("Please wait...");
+            progressDialog.setMessage("");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... args) {
+            try {
+                URL url = new URL(json_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String data_string = URLEncoder.encode("userId", "UTF-8") + "=" + URLEncoder.encode(LoginActivity.id, "UTF-8");
+                bufferedWriter.write(data_string);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line + "\n");
+                }
+//                inputStream.close();btnAttendance
+                httpURLConnection.disconnect();
+
+                return stringBuilder.toString().trim();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            progressDialog.dismiss();
+            //Toast.makeText(getApplicationContext(), "First Get Json\n"+result, Toast.LENGTH_SHORT).show();
+            parseJson(result);
+        }
+    }
+
+
 
    @Override
     public void onBackPressed() {

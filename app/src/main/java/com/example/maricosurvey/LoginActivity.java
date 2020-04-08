@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String SECURITY_TAG = "Security Permission";
     private static final int REQUEST_Code = 0;
     private int PERMISSION_ALL = 1;
-    public static String code = "", message = "", userid = "";
+    public static String code = "", message = "", userid = "", id = "";
     private static String[] PERMISSIONS_LIST = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -140,8 +140,10 @@ public class LoginActivity extends AppCompatActivity {
                 //JSONObject jo = jsonArray.getJSONObject(0);
                 code = jsonObject.getString("success");
                 message = jsonObject.getString("message");
+                jsonObject = jsonObject.getJSONObject("userData");
+                id = jsonObject.getString("RecordId");
                 Log.e("response",code+message);
-
+                Log.e("created by id", id);
                 if (code.equals("true")) {
                     userid = edtid.getText().toString();
                     Bundle IDbundle = new Bundle();
