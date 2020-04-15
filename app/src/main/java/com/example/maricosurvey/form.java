@@ -29,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -60,7 +61,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class form extends AppCompatActivity {
@@ -92,11 +95,15 @@ public class form extends AppCompatActivity {
     JSONArray jsonArr;
     String Json_String;
     String division, district, thana;
-    Integer divisionStartIndex, divisionEndIndex, thanaCode1=-1, thanaCode2=-1, thanaCode3=-1;
+    Integer divisionStartIndex;
+    Integer divisionEndIndex;
+    String thanaCode1="";
+    String thanaCode2="";
+    String thanaCode3="";
 
     public static String presentLat = "", presentLon = "", presentAcc = "";
-
-    String temp = "";
+    String imageString = "";
+    String temp = "", NumberOfChamber = "1";
     String[] sDropList = new String[] {"Male", "Female"};
     String[] yesnoDropList = new String[] {"N/A", "Yes", "No"};
     String[] chamberTypesList = new String[] {"N/A", "Pharmacy", "Hospital", "Clinic", "Stand Alone", "Other"};
@@ -107,101 +114,9 @@ public class form extends AppCompatActivity {
             "EX-PRINCIPAL & DIRECTOR","PRINCIPAL","DIRECTOR","DEPARTMENT HEAD","IN CHARGE","JUNIOR CONSULTANT","MD RESIDENT","MEDICAL OFFICER","SENIOR MEDICAL OFFICER","PEDIATRIC SURGEON",
             "RESIDENTIAL MEDICAL OFFICER","RESIDENTIAL MEDICAL OFFICER (ENT)","UHFPO","OTHER"};
     String[] offdayList = new  String[] {"N/A", "Saturday","Sunday","Monday","Tuesday","Wednesday", "Thursday","Friday"};
-    String chamberNumber = "";
     String[] divisionList = new String[] {"Barisal", "Chittagong", "Dhaka", "Khulna", "Rajshahi", "Rangpur", "Sylhet"};
 
-    String[] districtList = new String[]{"Barguna", "Barisal", "Bhola", "Jhalokati", "Patuakhali", "Pirojpur", "Bandarban", "Brahmanbaria", "Chandpur", "Chittagong", "Comilla", "Cox's Bazar",
-            "Feni", "Khagrachhari", "Lakshmipur", "Noakhali", "Rangamati", "Dhaka", "Faridpur", "Gazipur", "Gopalganj", "Jamalpur", "Kishoregonj", "Madaripur",
-            "Manikganj", "Munshiganj", "Mymensingh", "Narayanganj", "Narsingdi", "Netrakona", "Rajbari", "Shariatpur", "Sherpur", "Tangail", "Bagerhat", "Chuadanga", "Jessore", "Jhenaidah", "Khulna",
-            "Kushtia", "Magura", "Meherpur", "Narail", "Satkhira", "Bogra", "Joypurhat", "Naogaon", "Natore", "Chapai Nababganj", "Pabna", "Rajshahi", "Sirajganj", "Dinajpur", "Gaibandha", "Kurigram",
-            "Lalmonirhat", "Nilphamari", "Zila", "Panchagarh", "Rangpur", "Thakurgaon", "Habiganj", "Maulvibazar", "Sunamganj", "Sylhet"};
 
-
-    String[] thanaList = new String[] {"Amtali", "Bamna", "Barguna Sadar", "Betagi", "Patharghata", "Taltali", "Agailjhara", "Babuganj", "Bakerganj", "Banari Para", "Gaurnadi", "Hizla", "Barisal Sadar (Kotwali)", "Mhendiganj",
-            "Muladi", "Wazirpur", "Bhola Sadar", "Burhanuddin", "Char Fasson", "Daulat Khan", "Lalmohan", "Manpura", "Tazumuddin", "Jhalokati Sadar", "Kanthalia", "Nalchity", "Rajapur",
-            "Bauphal", "Dashmina", "Dumki", "Galachipa", "Kalapara", "Mirzaganj", "Patuakhali Sadar", "Rangabali", "Bhandaria", "Kawkhali", "Mathbaria", "Nazirpur", "Pirojpur Sadar", "Nesarabad (Swarupkati)", "Zianagar",
-            "Alikadam", "Bandarban Sadar", "Lama", "Naikhongchhari", "Rowangchhari", "Ruma", "Thanchi", "Akhaura", "Banchharampur", "Bijoynagar", "Brahmanbaria Sadar", "Ashuganj", "Kasba", "Nabinagar", "Nasirnagar",
-            "Sarail", "Chandpur Sadar", "Faridganj", "Haim Char", "Hajiganj", "Kachua", "Matlab Dakshi", "Matlab Uttar", "Shahrasti", "Anowara", "Bayejid Bostami", "Banshkhali", "Bakalia", "Boalkhali", "Chandanaish",
-            "Chandgaon", "Chittagong Port", "Double Mooring", "Fatikchhari", "Halishahar", "Hathazari", "Kotwali", "Khulshi", "Lohagara", "Mirsharai", "Pahartali", "Panchlaish", "Patiya", "Patenga",
-            "Rangunia", "Raozan", "Sandwip", "Satkania", "Sitakunda", "Barura", "Brahman Para", "Burichang", "Chandina", "Chauddagram", "Comilla Sadar Dakshin", "Daudkandi", "Debidwar", "Homna", "Comilla Adarsha Sadar", "Laksam", "Manoharganj",
-            "Meghna", "Muradnagar", "Nangalkot", "Titas", "Chakaria", "Cox's Bazar Sadar", "Kutubdia", "Maheshkhali", "Pekua", "Ramu", "Teknaf", "Ukhia", "Chhagalnaiya", "Daganbhuiyan", "Feni Sadar", "Fulgazi", "Parshuram",
-            "Sonagazi", "Dighinala", "Khagrachhari Sadar", "Lakshmichhari", "Mahalchhari", "Manikchhari", "Matiranga", "Panchhari", "Ramgarh", "Kamalnagar", "Lakshmipur Sadar", "Roypur", "Ramganj", "Ramgati", "Begumganj",
-            "Chatkhil", "Companiganj", "Hatiya", "Kabirhat", "Senbagh", "Sonaimuri", "Subarnachar", "Noakhali Sadar", "Baghaichhari", "Barkal Upazila", "Kawkhali (Betbunia)", "Belai Chhari Upazila", "Kaptai Upazila", "Jurai Chhari Upazila",
-            "Langadu Upazila", "Naniarchar Upazila", "Rajasthali Upazila", "Rangamati Sadar Upazila",
-            "Adabor", "Badda", "Bangshal", "Biman Bandar", "Banani", "Cantonment", "Chak Bazar", "Dakshinkhan", "Darus Salam", "Demra", "Dhamrai",
-            "Dhanmondi", "Dohar", "Bhasan Tek", "Bhatara", "Gendaria", "Gulshan", "Hazaribagh", "Jatrabari", "Kafrul", "Kadamtali", "Kalabagan", "Kamrangir Char", "Khilgaon", "Khilkhet", "Keraniganj", "Kotwali", "Lalbagh",
-            "Mirpur", "Mohammadpur", "Motijheel", "Mugda Para", "Nawabganj", "New Market", "Pallabi", "Paltan", "Ramna", "Rampura", "Sabujbagh", "Rupnagar", "Savar", "Shahjahanpur", "Shah Ali", "Shahbagh",
-            "Shyampur", "Sher-e-bangla Nagar", "Sutrapur", "Tejgaon", "Tejgaon Ind.Area", "Turag", "Uttara Paschim", "Uttara Purba","Uttar Khan", "Wari", "Alfadanga", "Bhanga", "Boalmari", "Char Bhadrasan", "Faridpur Sadar", "Madhukhali",
-            "Nagarkanda", "Sadarpur", "Saltha", "Gazipur Sadar", "Kaliakair", "Kaliganj", "Kapasia", "Sreepur", "Gopalganj Sadar", "Kashiani", "Kotalipara", "Muksudpur", "Tungipara", "Bakshiganj", "Dewanganj", "Islampur",
-            "Jamalpur Sadar", "Madarganj", "Melandaha", "Sarishabari Upazila", "Austagram", "Bajitpur", "Bhairab", "Hossainpur", "Itna", "Karimganj", "Katiadi", "Kishoreganj Sadar", "Kuliar Char", "Mithamain", "Nikli", "Pakundia",
-            "Tarail", "Kalkini", "Madaripur Sadar", "Rajoir", "Shibchar", "Daulatpur", "Ghior", "Harirampur", "Manikganj Sadar", "Saturia", "Shibalaya", "Singair", "Gazaria", "Lohajang", "Munshiganj Sadar", "Serajdikhan",
-            "Sreenagar", "Tongibari", "Bhaluka", "Dhobaura", "Fulbaria", "Gaffargaon", "Gauripur", "Haluaghat", "Ishwarganj", "Mymensingh Sadar", "Muktagachha", "Nandail", "Phulpur", "Trishal", "Araihazar", "Sonargaon", "Bandar",
-            "Narayanganj Sadar", "Rupganj", "Belabo", "Manohardi", "Narsingdi Sadar", "Palash", "Roypura", "Shibpur", "Atpara", "Barhatta", "Durgapur", "Khaliajuri", "Kalmakanda", "Kendua", "Madan", "Mohanganj", "Netrokona Sadar",
-            "Purbadhala", "Baliakandi", "Goalanda", "Kalukhali", "Pangsha", "Rajbari Sadar", "Bhedarganj", "Damudya", "Gosairhat", "Naria", "Shariatpur Sadar", "Zanjira", "Jhenaigati", "Nakla", "Nalitabari", "Sherpur Sadar",
-            "Sreebardi", "Basail", "Bhuapur", "Delduar", "Dhanbari", "Ghatail", "Gopalpur", "Kalihati", "Madhupur", "Mirzapur", "Nagarpur", "Sakhipur", "Tangail Sadar",
-            "Bagerhat Sadar", "Chitalmari", "Fakirhat", "Kachua", "Mollahat",
-            "Mongla", "Morrelganj", "Rampal", "Sarankhola", "Alamdanga", "Chuadanga Sadar", "Damurhuda", "Jiban Nagar", "Abhaynagar", "Bagher Para", "Chaugachha", "Jhikargachha", "Keshabpur", "Jessore Sadar", "Manirampur", "Sharsha",
-            "Harinakunda", "Jhenaidah Sadar", "Kaliganj", "Kotchandpur", "Maheshpur", "Shailkupa", "Batiaghata", "Dacope", "Daulatpur", "Dumuria", "Dighalia", "Khalishpur", "Khan Jahan Ali", "Khulna Sadar", "Koyra", "Paikgachha", "Phultala", "Rupsa",
-            "Sonadanga", "Terokhada", "Bheramara", "Dualatpur", "Khoksa", "Kumarkhali", "Kushtia Sadar", "Mirpur", "Magura Sadar", "Mohammadpur", "Shalikha", "Sreepur", "Gangni", "Mujib Nagar", "Meherpur Sadar", "Kalia", "Lohagara", "Narail Sadar",
-            "Assasuni", "Debhata", "Kalaroa", "Kaliganj", "Satkhira Sadar", "Shyamnagar", "Tala",
-            "Adamdighi", "Bogra Sadar", "Dhunat", "Dhupchanchia", "Gabtali", "Kahaloo", "Nandigram", "Sariakandi", "Shajahanpur", "Sherpur", "Shibganj",
-            "Sonatola", "Akkelpur", "Joypurhat Sadar", "Kalai", "Khetlal", "Panchbibi", "Atrai", "Badalgachhi", "Dhamoirhat", "Manda", "Mahadebpur", "Naogaon Sadar", "Niamatpur", "Patnitala", "Porsha", "Raninagar", "Sapahar", "Bagatipara",
-            "Baraigram", "Gurudaspur", "Lalpur", "Natore Sadar", "Singra", "Bholahat", "Gomastapur", "Nachole", "Chapai Nababganj Sadar", "Shibgonj", "Atgharia", "Bera", "Bhangura", "Chatmohar", "Faridpur", "Ishwardi", "Pabna Sadar", "Santhia",
-            "Sujanagar", "Bagha", "Baghmara", "Boalia", "Charghat", "Durgapur", "Godagari", "Matihar", "Mohanpur", "Paba", "Puthia", "Rajpara", "Shah Makhdum", "Tanore", "Belkuchi", "Chauhali", "Kamarkhanda", "Kazipur", "Royganj", "Shahjadpur",
-            "Sirajganj Sadar", "Tarash", "Ullah Para",
-            "Birampur", "Birganj", "Biral", "Bochaganj", "Chirirbandar", "Fulbari", "Ghoraghat", "Hakimpur", "Kaharole", "Khansama", "Dinajpur Sadar", "Nawabganj", "Parbatipur", "Fulchhari", "Gaibandha Sadar",
-            "Gobindaganj", "Palashbari", "Sadullapur", "Saghata", "Sundarganj", "Bhurungamari", "Char Rajibpur", "Chilmari", "Phulbari", "Kurigram Sadar", "Nageshwari", "Rajarhat", "Raumari", "Ulipur", "Aditmari", "Hatibandha",
-            "Kaliganj", "Lalmonirhat Sadar", "Patgram", "Dimla Upazila", "Domar Upazila", "Jaldhaka Upazila","Kishorganj Upazila", "Nilphamari Sadar Upazila", "Saidpur Upazila", "Atwari", "Boda", "Debiganj", "Panchagarh Sadar", "Tentulia", "Badarganj",
-            "Gangachara", "Kaunia", "Rangpur Sadar", "Mitha Pukur", "Pirgachha", "Pirganj", "Taraganj", "Baliadangi", "Haripur", "Pirganj", "Ranisankail", "Thakurgaon Sadar",
-            "Ajmiriganj", "Bahubal", "Baniachong", "Chunarughat", "Habiganj Sadar", "Lakhai",
-            "Madhabpur", "Nabiganj", "Barlekha", "Juri", "Kamalganj", "Kulaura", "Maulvibazar Sadar", "Rajnagar", "Sreemangal", "Bishwambarpur", "Chhatak", " Dakshin Sunamganj", "Derai", "Dharampasha", "Dowarabazar", "Jagannathpur", "Jamalganj", "Sulla", "Sunamganj Sadar",
-            "Tahirpur", "Balaganj", "Beani Bazar", "Bishwanath", "Companiganj", "Dakshin Surma", "Fenchuganj", "Golapganj", "Gowainghat", "Jaintiapur", "Kanaighat", "Sylhet Sadar", "Zakiganj"};
-
-    String[] barisalThanaList = new String[] {"Amtali", "Bamna", "Barguna Sadar", "Betagi", "Patharghata", "Taltali", "Agailjhara", "Babuganj", "Bakerganj", "Banari Para", "Gaurnadi", "Hizla", "Barisal Sadar (Kotwali)", "Mhendiganj",
-            "Muladi", "Wazirpur", "Bhola Sadar", "Burhanuddin", "Char Fasson", "Daulat Khan", "Lalmohan", "Manpura", "Tazumuddin", "Jhalokati Sadar", "Kanthalia", "Nalchity", "Rajapur",
-            "Bauphal", "Dashmina", "Dumki", "Galachipa", "Kalapara", "Mirzaganj", "Patuakhali Sadar", "Rangabali", "Bhandaria", "Kawkhali", "Mathbaria", "Nazirpur", "Pirojpur Sadar", "Nesarabad (Swarupkati)", "Zianagar"};
-
-    String[] chittagongThanaList = new String[] {"Alikadam", "Bandarban Sadar", "Lama", "Naikhongchhari", "Rowangchhari", "Ruma", "Thanchi", "Akhaura", "Banchharampur", "Bijoynagar", "Brahmanbaria Sadar", "Ashuganj", "Kasba", "Nabinagar", "Nasirnagar",
-            "Sarail", "Chandpur Sadar", "Faridganj", "Haim Char", "Hajiganj", "Kachua", "Matlab Dakshi", "Matlab Uttar", "Shahrasti", "Anowara", "Bayejid Bostami", "Banshkhali", "Bakalia", "Boalkhali", "Chandanaish",
-            "Chandgaon", "Chittagong Port", "Double Mooring", "Fatikchhari", "Halishahar", "Hathazari", "Kotwali", "Khulshi", "Lohagara", "Mirsharai", "Pahartali", "Panchlaish", "Patiya", "Patenga",
-            "Rangunia", "Raozan", "Sandwip", "Satkania", "Sitakunda", "Barura", "Brahman Para", "Burichang", "Chandina", "Chauddagram", "Comilla Sadar Dakshin", "Daudkandi", "Debidwar", "Homna", "Comilla Adarsha Sadar", "Laksam", "Manoharganj",
-            "Meghna", "Muradnagar", "Nangalkot", "Titas", "Chakaria", "Cox's Bazar Sadar", "Kutubdia", "Maheshkhali", "Pekua", "Ramu", "Teknaf", "Ukhia", "Chhagalnaiya", "Daganbhuiyan", "Feni Sadar", "Fulgazi", "Parshuram",
-            "Sonagazi", "Dighinala", "Khagrachhari Sadar", "Lakshmichhari", "Mahalchhari", "Manikchhari", "Matiranga", "Panchhari", "Ramgarh", "Kamalnagar", "Lakshmipur Sadar", "Roypur", "Ramganj", "Ramgati", "Begumganj",
-            "Chatkhil", "Companiganj", "Hatiya", "Kabirhat", "Senbagh", "Sonaimuri", "Subarnachar", "Noakhali Sadar", "Baghaichhari", "Barkal Upazila", "Kawkhali (Betbunia)", "Belai Chhari Upazila", "Kaptai Upazila", "Jurai Chhari Upazila",
-            "Langadu Upazila", "Naniarchar Upazila", "Rajasthali Upazila", "Rangamati Sadar Upazila"};
-
-    String[] dhakaThanaList = new String[] {"Adabor", "Badda", "Bangshal", "Biman Bandar", "Banani", "Cantonment", "Chak Bazar", "Dakshinkhan", "Darus Salam", "Demra", "Dhamrai",
-            "Dhanmondi", "Dohar", "Bhasan Tek", "Bhatara", "Gendaria", "Gulshan", "Hazaribagh", "Jatrabari", "Kafrul", "Kadamtali", "Kalabagan", "Kamrangir Char", "Khilgaon", "Khilkhet", "Keraniganj", "Kotwali", "Lalbagh",
-            "Mirpur", "Mohammadpur", "Motijheel", "Mugda Para", "Nawabganj", "New Market", "Pallabi", "Paltan", "Ramna", "Rampura", "Sabujbagh", "Rupnagar", "Savar", "Shahjahanpur", "Shah Ali", "Shahbagh",
-            "Shyampur", "Sher-e-bangla Nagar", "Sutrapur", "Tejgaon", "Tejgaon Ind.Area", "Turag", "Uttara Paschim", "Uttara Purba","Uttar Khan", "Wari", "Alfadanga", "Bhanga", "Boalmari", "Char Bhadrasan", "Faridpur Sadar", "Madhukhali",
-            "Nagarkanda", "Sadarpur", "Saltha", "Gazipur Sadar", "Kaliakair", "Kaliganj", "Kapasia", "Sreepur", "Gopalganj Sadar", "Kashiani", "Kotalipara", "Muksudpur", "Tungipara", "Bakshiganj", "Dewanganj", "Islampur",
-            "Jamalpur Sadar", "Madarganj", "Melandaha", "Sarishabari Upazila", "Austagram", "Bajitpur", "Bhairab", "Hossainpur", "Itna", "Karimganj", "Katiadi", "Kishoreganj Sadar", "Kuliar Char", "Mithamain", "Nikli", "Pakundia",
-            "Tarail", "Kalkini", "Madaripur Sadar", "Rajoir", "Shibchar", "Daulatpur", "Ghior", "Harirampur", "Manikganj Sadar", "Saturia", "Shibalaya", "Singair", "Gazaria", "Lohajang", "Munshiganj Sadar", "Serajdikhan",
-            "Sreenagar", "Tongibari", "Bhaluka", "Dhobaura", "Fulbaria", "Gaffargaon", "Gauripur", "Haluaghat", "Ishwarganj", "Mymensingh Sadar", "Muktagachha", "Nandail", "Phulpur", "Trishal", "Araihazar", "Sonargaon", "Bandar",
-            "Narayanganj Sadar", "Rupganj", "Belabo", "Manohardi", "Narsingdi Sadar", "Palash", "Roypura", "Shibpur", "Atpara", "Barhatta", "Durgapur", "Khaliajuri", "Kalmakanda", "Kendua", "Madan", "Mohanganj", "Netrokona Sadar",
-            "Purbadhala", "Baliakandi", "Goalanda", "Kalukhali", "Pangsha", "Rajbari Sadar", "Bhedarganj", "Damudya", "Gosairhat", "Naria", "Shariatpur Sadar", "Zanjira", "Jhenaigati", "Nakla", "Nalitabari", "Sherpur Sadar",
-            "Sreebardi", "Basail", "Bhuapur", "Delduar", "Dhanbari", "Ghatail", "Gopalpur", "Kalihati", "Madhupur", "Mirzapur", "Nagarpur", "Sakhipur", "Tangail Sadar"};
-
-    String[] khulnaThanaList = new String[] {"Bagerhat Sadar", "Chitalmari", "Fakirhat", "Kachua", "Mollahat",
-            "Mongla", "Morrelganj", "Rampal", "Sarankhola", "Alamdanga", "Chuadanga Sadar", "Damurhuda", "Jiban Nagar", "Abhaynagar", "Bagher Para", "Chaugachha", "Jhikargachha", "Keshabpur", "Jessore Sadar", "Manirampur", "Sharsha",
-            "Harinakunda", "Jhenaidah Sadar", "Kaliganj", "Kotchandpur", "Maheshpur", "Shailkupa", "Batiaghata", "Dacope", "Daulatpur", "Dumuria", "Dighalia", "Khalishpur", "Khan Jahan Ali", "Khulna Sadar", "Koyra", "Paikgachha", "Phultala", "Rupsa",
-            "Sonadanga", "Terokhada", "Bheramara", "Dualatpur", "Khoksa", "Kumarkhali", "Kushtia Sadar", "Mirpur", "Magura Sadar", "Mohammadpur", "Shalikha", "Sreepur", "Gangni", "Mujib Nagar", "Meherpur Sadar", "Kalia", "Lohagara", "Narail Sadar",
-            "Assasuni", "Debhata", "Kalaroa", "Kaliganj", "Satkhira Sadar", "Shyamnagar", "Tala"};
-
-    String[] rajshahiThanaList = new String[] {"Adamdighi", "Bogra Sadar", "Dhunat", "Dhupchanchia", "Gabtali", "Kahaloo", "Nandigram", "Sariakandi", "Shajahanpur", "Sherpur", "Shibganj",
-            "Sonatola", "Akkelpur", "Joypurhat Sadar", "Kalai", "Khetlal", "Panchbibi", "Atrai", "Badalgachhi", "Dhamoirhat", "Manda", "Mahadebpur", "Naogaon Sadar", "Niamatpur", "Patnitala", "Porsha", "Raninagar", "Sapahar", "Bagatipara",
-            "Baraigram", "Gurudaspur", "Lalpur", "Natore Sadar", "Singra", "Bholahat", "Gomastapur", "Nachole", "Chapai Nababganj Sadar", "Shibgonj", "Atgharia", "Bera", "Bhangura", "Chatmohar", "Faridpur", "Ishwardi", "Pabna Sadar", "Santhia",
-            "Sujanagar", "Bagha", "Baghmara", "Boalia", "Charghat", "Durgapur", "Godagari", "Matihar", "Mohanpur", "Paba", "Puthia", "Rajpara", "Shah Makhdum", "Tanore", "Belkuchi", "Chauhali", "Kamarkhanda", "Kazipur", "Royganj", "Shahjadpur",
-            "Sirajganj Sadar", "Tarash", "Ullah Para"};
-
-    String[] rangpurThanaList = new String[] {"Birampur", "Birganj", "Biral", "Bochaganj", "Chirirbandar", "Fulbari", "Ghoraghat", "Hakimpur", "Kaharole", "Khansama", "Dinajpur Sadar", "Nawabganj", "Parbatipur", "Fulchhari", "Gaibandha Sadar",
-            "Gobindaganj", "Palashbari", "Sadullapur", "Saghata", "Sundarganj", "Bhurungamari", "Char Rajibpur", "Chilmari", "Phulbari", "Kurigram Sadar", "Nageshwari", "Rajarhat", "Raumari", "Ulipur", "Aditmari", "Hatibandha",
-            "Kaliganj", "Lalmonirhat Sadar", "Patgram", "Dimla Upazila", "Domar Upazila", "Jaldhaka Upazila","Kishorganj Upazila", "Nilphamari Sadar Upazila", "Saidpur Upazila", "Atwari", "Boda", "Debiganj", "Panchagarh Sadar", "Tentulia", "Badarganj",
-            "Gangachara", "Kaunia", "Rangpur Sadar", "Mitha Pukur", "Pirgachha", "Pirganj", "Taraganj", "Baliadangi", "Haripur", "Pirganj", "Ranisankail", "Thakurgaon Sadar"};
-
-    String[] sylthetThanaList = new String[] {"Ajmiriganj", "Bahubal", "Baniachong", "Chunarughat", "Habiganj Sadar", "Lakhai",
-            "Madhabpur", "Nabiganj", "Barlekha", "Juri", "Kamalganj", "Kulaura", "Maulvibazar Sadar", "Rajnagar", "Sreemangal", "Bishwambarpur", "Chhatak", " Dakshin Sunamganj", "Derai", "Dharampasha", "Dowarabazar", "Jagannathpur", "Jamalganj", "Sulla", "Sunamganj Sadar",
-            "Tahirpur", "Balaganj", "Beani Bazar", "Bishwanath", "Companiganj", "Dakshin Surma", "Fenchuganj", "Golapganj", "Gowainghat", "Jaintiapur", "Kanaighat", "Sylhet Sadar", "Zakiganj"};
 
     String[] barisalDistricList = new String[] {"Barguna", "Barisal", "Bhola", "Jhalokati", "Patuakhali", "Pirojpur"};
     String[] chittagongDistricList = new String[] {"Bandarban", "Brahmanbaria", "Chandpur", "Chittagong", "Comilla", "Cox's Bazar",
@@ -217,8 +132,10 @@ public class form extends AppCompatActivity {
 
     EditText editdoctorName, editdoctorAge, editorganizationName, editfirstPhoneNumber, editsecondPhoneNumber, editdoctorEmail, editdoctorOtherdegree, editAriaZipcode,editAriaZipcode1,editAriaZipcode2,editAriaZipcode3, editpatientPerDay, editvisitFees, editreVisitFees, editownerName, editownerPhoneNumber, editownerEmail, editdimension,
             editfirstAdd, editsecondAdd, editthirdAdd, editRemarks;
-    TextView location,todayVisit,totalVisit;
-    AutoCompleteTextView autoDivision1, autoDistrict1, autoThana1, autoDivision2, autoDistrict2, autoThana2, autoDivision3, autoDistrict3, autoThana3;
+    TextView location,todayVisit,totalVisit,textId;
+    AutoCompleteTextView autoDivision1, autoDistrict1, autoDivision2, autoDistrict2, autoDivision3, autoDistrict3;
+
+    Spinner thanaSpinner1, thanaSpinner2, thanaSpinner3;
 
     String doctorDisclaimer = "", doctorName = "", doctorSex = "Male", doctorAge="", organizationName="", firstPhoneNumber="", secondPhoneNumber="", doctorEmail="", doctorOtherdegree = "", designation= "", category= "", privatePractice= "", tittle= "", fstariaZipcode= "",scndariaZipcode= "",thirdariaZipcode= "", patientPerDay="", visitFees="",
             reVisitFees="", pharmacyOwnerType = "", ownerName="", ownerPhoneNumber="", ownerEmail="", dimension="", fstchmberAdd= "", scndchmberAdd= "", thirdchmberAdd= "", remarks= "";
@@ -236,10 +153,57 @@ public class form extends AppCompatActivity {
     String isTradelicense= "", isCommsagreed= "", isbrandingInternal= "", isbrandingExternal= "", isfascia= "", isSignboard= "";
 
     TextView textPremise, textCard, textSignboard, textChamber;
-    String user = "";
+    String user = "",id = "";
+    String thanaName1 = "", thanaName2 = "", thanaName3;
+    Map<String, String> thanaMap1 ;
+    Map<String, String> thanaMap2 ;
+    Map<String, String> thanaMap3 ;
+
+// saving instances in case of activity restarts for camera intent
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("id",id);
+        outState.putString("IsConsent",doctorDisclaimer);
+        outState.putString("IsMBBS",isMbbs);
+        outState.putString("IsFCPS",isFcps);
+        outState.putString("IsFRCS",isFrcs);
+        outState.putString("IsMD",isMd);
+        outState.putString("IsDiploma",isDiploma);
+        outState.putString("IsBCS",isBcs);
+        outState.putString("Designation",designation);
+        outState.putString("Category",category);
+        outState.putString("IsPrivatePractice",privatePractice);
+        outState.putString("Title",tittle);
+        outState.putString("NumberOfChamber",NumberOfChamber);
+        outState.putString("thanaName1",thanaName1);
+        outState.putString("ThanaName2",thanaName2);
+        outState.putString("ThanaName3",thanaName3);
+        outState.putString("ThanaCode1",thanaCode1);
+        outState.putString("ThanaCode2",thanaCode2);
+        outState.putString("ThanaCode3",thanaCode3);
+        outState.putString("Cham01OffDay",fstchmberOffday);
+        outState.putString("Cham01Type",fstchmberType);
+        outState.putString("Cham02OffDay",scndchmberOffday);
+        outState.putString("Cham02Type",scndchmberType);
+        outState.putString("Cham03OffDay",thirdchmberOffday);
+        outState.putString("Cham03Type",thirdchmberType);
+        outState.putString("PharmacyOwnerType",pharmacyOwnerType);
+        outState.putString("IsTradeLicense",isTradelicense);
+        outState.putString("IsAgreed",isCommsagreed);
+        outState.putString("IsBrandingExternal",isbrandingExternal);
+        outState.putString("IsBrandingInternal",isbrandingInternal);
+        outState.putString("IsShopFascia",isfascia);
+        outState.putString("IsSignboard",isSignboard);
+        outState.putString("PremisePhotoPath",premisePhotoPath);
+        outState.putString("CardPhotoPath",cardPhotPath);
+        outState.putString("SignboardPhotoPath",signboardPhotPath);
+        outState.putString("ChamberPhotoPath",chamberPhotoPath);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onCreate(Bundle s) {
+        super.onCreate(s);
         setContentView(R.layout.activity_form);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -254,12 +218,133 @@ public class form extends AppCompatActivity {
                     MY_PERMISSIONS_REQUEST);
             Log.e("Permission","Requesting for storage permission");
         }
-        Log.e("thana list size", String.valueOf(thanaList.length));
 
         intent = new Intent(BROADCAST_ACTION);
-
+        IDbundle = getIntent().getExtras();
+        id = IDbundle.getString("id");
+        textId = findViewById(R.id.id);
         todayVisit = findViewById(R.id.todayVisit);
         totalVisit = findViewById(R.id.totalVisit);
+
+        // setting the default chamber number to 1
+        rd = findViewById(R.id.ch1);
+        rd.setChecked(true);
+
+
+        textPremise = findViewById(R.id.textPremise);
+        textCard = findViewById(R.id.textCard);
+        textSignboard = findViewById(R.id.textSignboard);
+        textChamber = findViewById(R.id.textChamber);
+
+
+        autoDivision1 = findViewById(R.id.firstdivisionList);
+        autoDistrict1 = findViewById(R.id.firstdistrictList);
+        thanaSpinner1 = findViewById(R.id.firstThanaList);
+
+        autoDivision2 = findViewById(R.id.seconddivisionList);
+        autoDistrict2 = findViewById(R.id.seconddistrictList);
+        thanaSpinner2 = findViewById(R.id.secondThanaList);
+
+        autoDivision3 = findViewById(R.id.thirddivisionList);
+        autoDistrict3 = findViewById(R.id.thirddistrictList);
+        thanaSpinner3 = findViewById(R.id.thirdThanaList);
+
+
+// if activity restarts then restore those instances
+        if(s != null)
+        {
+            id = s.getString("id");
+            doctorDisclaimer = s.getString("IsConsent");
+            isMbbs = s.getString("IsMBBS");
+            isFcps = s.getString("IsFCPS");
+            isFrcs = s.getString("IsFRCS");
+            isMd = s.getString("IsMD");
+            isDiploma = s.getString("IsDiploma");
+            isBcs = s.getString("IsBCS");
+            designation = s.getString("Designation");
+            category = s.getString("Category");
+            privatePractice = s.getString("IsPrivatePractice");
+            tittle = s.getString("Title");
+            NumberOfChamber = s.getString("NumberOfChamber");
+            if(NumberOfChamber.equals("2"))
+            {
+                rd = findViewById(R.id.ch2);
+                rd.setChecked(true);
+            }
+            else if(NumberOfChamber.equals("3"))
+            {
+                rd = findViewById(R.id.ch3);
+                rd.setChecked(true);
+            }
+            thanaCode1 = s.getString("ThanaCode1");
+            thanaName1 = s.getString("ThanaName1");
+            if(!thanaCode1.equals(""))
+            {
+                List<String> lst = new ArrayList<String>();
+                lst.add(thanaName1);
+                showThanaList(lst,1);
+            }
+            thanaCode2 = s.getString("ThanaCode2");
+            thanaName2 = s.getString("ThanaName2");
+            if(!thanaCode2.equals(""))
+            {
+                List<String> lst = new ArrayList<String>();
+                lst.add(thanaName2);
+                showThanaList(lst,2);
+            }
+            thanaCode3 = s.getString("ThanaCode3");
+            thanaName3 = s.getString("ThanaName3");
+            if(!thanaCode3.equals(""))
+            {
+                List<String> lst = new ArrayList<String>();
+                lst.add(thanaName3);
+                showThanaList(lst,3);
+            }
+            fstchmberOffday = s.getString("Cham01OffDay");
+            fstchmberType = s.getString("Cham01Type");
+            scndchmberOffday = s.getString("Cham02OffDay");
+            scndchmberType = s.getString("Cham02Type");
+            thirdchmberOffday = s.getString("Cham03OffDay");
+            thirdchmberType = s.getString("Cham03Type");
+            pharmacyOwnerType = s.getString("PharmacyOwnerType");
+            isTradelicense = s.getString("IsTradeLicense");
+            isCommsagreed = s.getString("IsAgreed");
+            isbrandingExternal = s.getString("IsBrandingExternal");
+            isbrandingInternal = s.getString("IsBrandingInternal");
+            isfascia = s.getString("IsFascia");
+            isSignboard = s.getString("IsSignboard");
+            premisePhotoPath = s.getString("PremisePhotoPath");
+            cardPhotPath = s.getString("CardPhotoPath");
+            signboardPhotPath = s.getString("SignboradPhotoPath");
+            chamberPhotoPath = s.getString("ChamberPhotoPath");
+            if(!premisePhotoPath.equals(""))
+            {
+                textPremise.setBackgroundResource(R.drawable.ok_button_square);
+                temp = textPremise.getText().toString() + "Ok";
+                textPremise.setText(temp);
+            }
+            if(!cardPhotPath.equals(""))
+            {
+                textCard.setBackgroundResource(R.drawable.ok_button_square);
+                temp = textCard.getText().toString() + "Ok";
+                textCard.setText(temp);
+            }
+            if(!signboardPhotPath.equals(""))
+            {
+                textSignboard.setBackgroundResource(R.drawable.ok_button_square);
+                temp = textSignboard.getText().toString() + "Ok";
+                textSignboard.setText(temp);
+            }
+            if(!chamberPhotoPath.equals(""))
+            {
+                textChamber.setBackgroundResource(R.drawable.ok_button_square);
+                temp = textChamber.getText().toString() + "Ok";
+                textChamber.setText(temp);
+            }
+        }
+
+
+        textId.setText(id);
 
         new getTargetAchievement().execute();
 
@@ -271,17 +356,7 @@ public class form extends AppCompatActivity {
         photoName4 = LoginActivity.userid + "_chamber"+CustomUtility.getTimeStamp("yyyyMMddhhmmss") + ".jpg";
 
         //auto views;
-        autoDivision1 = findViewById(R.id.firstdivisionList);
-        autoDistrict1 = findViewById(R.id.firstdistrictList);
-        autoThana1 = findViewById(R.id.firstthanaList);
 
-        autoDivision2 = findViewById(R.id.seconddivisionList);
-        autoDistrict2 = findViewById(R.id.seconddistrictList);
-        autoThana2 = findViewById(R.id.secondthanaList);
-
-        autoDivision3 = findViewById(R.id.thirddivisionList);
-        autoDistrict3 = findViewById(R.id.thirddistrictList);
-        autoThana3 = findViewById(R.id.thirdthanaList);
 
 
         //all checkbox
@@ -356,10 +431,7 @@ public class form extends AppCompatActivity {
         signboardPhoto = findViewById(R.id.picSignboard);
         chamberPhoto = findViewById(R.id.picChamber);
 
-        textPremise = findViewById(R.id.textPremise);
-        textCard = findViewById(R.id.textCard);
-        textSignboard = findViewById(R.id.textSignboard);
-        textChamber = findViewById(R.id.textChamber);
+
 
         location = findViewById(R.id.gps);
 
@@ -422,9 +494,7 @@ public class form extends AppCompatActivity {
             }
         });
 
-        rd = findViewById(R.id.ch1);
 
-        rd.setChecked(true);
 
         sdropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -547,19 +617,6 @@ public class form extends AppCompatActivity {
         });
 
 
-        pharmacyOwnerGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-                    case R.id.sownerYes:
-                        pharmacyOwnerType = "Same";
-                        break;
-                    case R.id.sownerNo:
-                        pharmacyOwnerType = "Other";
-                        break;
-                }
-            }
-        });
 
 
         chamberGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -570,16 +627,19 @@ public class form extends AppCompatActivity {
                         firstChamber.setVisibility(View.VISIBLE);
                         secondChamber.setVisibility(View.GONE);
                         thirdChamber.setVisibility(View.GONE);
+                        NumberOfChamber = "1";
                         break;
                     case R.id.ch2:
                         firstChamber.setVisibility(View.VISIBLE);
                         secondChamber.setVisibility(View.VISIBLE);
                         thirdChamber.setVisibility(View.GONE);
+                        NumberOfChamber = "2";
                         break;
                     case R.id.ch3:
                         firstChamber.setVisibility(View.VISIBLE);
                         secondChamber.setVisibility(View.VISIBLE);
                         thirdChamber.setVisibility(View.VISIBLE);
+                        NumberOfChamber = "3";
                         break;
                 }
             }
@@ -666,44 +726,44 @@ public class form extends AppCompatActivity {
                {
                    divisionStartIndex = 0; //thana list starts
                    divisionEndIndex = 41; //thana list ends
-                   setDistrictThanaList(barisalDistricList, barisalThanaList, autoDistrict1, autoThana1);
+                   setDistrictList(barisalDistricList, autoDistrict1);
                    //Log.e("division",division + thanaList1.length);
                }
                else if (division.equals("Chittagong"))
                {
                    divisionStartIndex = 42;
                    divisionEndIndex = 152;
-                   setDistrictThanaList(chittagongDistricList, chittagongThanaList, autoDistrict1, autoThana1);
+                   setDistrictList(chittagongDistricList, autoDistrict1);
                }
                else if (division.equals("Dhaka"))
                {
                    divisionStartIndex = 153;
                    divisionEndIndex = 321;
-                   setDistrictThanaList(dhakaDistricList, dhakaThanaList, autoDistrict1, autoThana1);
+                   setDistrictList(dhakaDistricList, autoDistrict1);
                }
                else if (division.equals("Khulna"))
                {
                    divisionStartIndex = 322;
                    divisionEndIndex = 387;
-                   setDistrictThanaList(khulnaDistricList, khulnaThanaList, autoDistrict1, autoThana1);
+                   setDistrictList(khulnaDistricList, autoDistrict1);
                }
                else if (division.equals("Rajshahi"))
                {
                    divisionStartIndex = 388;
                    divisionEndIndex = 457;
-                   setDistrictThanaList(rajshahiDistricList, rajshahiThanaList, autoDistrict1, autoThana1);
+                   setDistrictList(rajshahiDistricList, autoDistrict1);
                }
                else if (division.equals("Rangpur"))
                {
                    divisionStartIndex = 458;
                    divisionEndIndex = 515;
-                   setDistrictThanaList(rangpurDistricList, rangpurThanaList, autoDistrict1, autoThana1);
+                   setDistrictList(rangpurDistricList, autoDistrict1);
                }
                else if (division.equals("Sylhet"))
                {
                    divisionStartIndex = 516;
                    divisionEndIndex = 553;
-                   setDistrictThanaList(sylthetDistricList, sylthetThanaList, autoDistrict1, autoThana1);
+                   setDistrictList(sylthetDistricList, autoDistrict1);
                }
            }
        });
@@ -712,25 +772,29 @@ public class form extends AppCompatActivity {
         autoDistrict1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("district",autoDistrict1.getText().toString());
+                String dis = autoDistrict1.getText().toString();
+                Log.e("district",dis);
+                progressDialog = new ProgressDialog(form.this);
+                progressDialog.setTitle("Please wait...");
+                progressDialog.setMessage("");
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                getThanaList(dis,1);
             }
         });
 
-        autoThana1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        thanaSpinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("thana",autoThana1.getText().toString());
-                String selection = (String) parent.getItemAtPosition(position);
-                Integer pos = -1,i;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                thanaName1 = thanaSpinner1.getSelectedItem().toString();
+                thanaCode1 = thanaMap1.get(thanaName1);
+                Log.e("Position", thanaCode1);
+            }
 
-                for (i = divisionStartIndex; i <= divisionEndIndex; i++) {
-                    if (thanaList[i].equals(selection)) {
-                        pos = i+1;
-                        break;
-                    }
-                }
-                thanaCode1 = pos;
-                Log.e("Position", thanaCode1.toString());
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -746,44 +810,44 @@ public class form extends AppCompatActivity {
                 {
                     divisionStartIndex = 0; //thana list starts
                     divisionEndIndex = 41; //thana list ends
-                    setDistrictThanaList(barisalDistricList, barisalThanaList, autoDistrict2, autoThana2);
+                    setDistrictList(barisalDistricList, autoDistrict2);
                     //Log.e("division",division + thanaList1.length);
                 }
                 else if (division.equals("Chittagong"))
                 {
                     divisionStartIndex = 42;
                     divisionEndIndex = 152;
-                    setDistrictThanaList(chittagongDistricList, chittagongThanaList, autoDistrict2, autoThana2);
+                    setDistrictList(chittagongDistricList, autoDistrict2);
                 }
                 else if (division.equals("Dhaka"))
                 {
                     divisionStartIndex = 153;
                     divisionEndIndex = 321;
-                    setDistrictThanaList(dhakaDistricList, dhakaThanaList, autoDistrict2, autoThana2);
+                    setDistrictList(dhakaDistricList, autoDistrict2);
                 }
                 else if (division.equals("Khulna"))
                 {
                     divisionStartIndex = 322;
                     divisionEndIndex = 387;
-                    setDistrictThanaList(khulnaDistricList, khulnaThanaList, autoDistrict2, autoThana2);
+                    setDistrictList(khulnaDistricList, autoDistrict2);
                 }
                 else if (division.equals("Rajshahi"))
                 {
                     divisionStartIndex = 388;
                     divisionEndIndex = 457;
-                    setDistrictThanaList(rajshahiDistricList, rajshahiThanaList, autoDistrict2, autoThana2);
+                    setDistrictList(rajshahiDistricList, autoDistrict2);
                 }
                 else if (division.equals("Rangpur"))
                 {
                     divisionStartIndex = 458;
                     divisionEndIndex = 515;
-                    setDistrictThanaList(rangpurDistricList, rangpurThanaList, autoDistrict2, autoThana2);
+                    setDistrictList(rangpurDistricList, autoDistrict2);
                 }
                 else if (division.equals("Sylhet"))
                 {
                     divisionStartIndex = 516;
                     divisionEndIndex = 553;
-                    setDistrictThanaList(sylthetDistricList, sylthetThanaList, autoDistrict2, autoThana2);
+                    setDistrictList(sylthetDistricList, autoDistrict2);
                 }
             }
         });
@@ -792,25 +856,29 @@ public class form extends AppCompatActivity {
         autoDistrict2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("district",autoDistrict2.getText().toString());
+                String dis = autoDistrict2.getText().toString();
+                Log.e("district",dis);
+                progressDialog = new ProgressDialog(form.this);
+                progressDialog.setTitle("Please wait...");
+                progressDialog.setMessage("");
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                getThanaList(dis,2);
             }
         });
 
-        autoThana2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        thanaSpinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("thana2",autoThana2.getText().toString());
-                String selection = (String) parent.getItemAtPosition(position);
-                Integer pos = -1,i;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                thanaName2 = thanaSpinner2.getSelectedItem().toString();
+                thanaCode2 = thanaMap2.get(thanaName2);
+                Log.e("Position", thanaCode2);
+            }
 
-                for (i = divisionStartIndex; i <= divisionEndIndex; i++) {
-                    if (thanaList[i].equals(selection)) {
-                        pos = i+1;
-                        break;
-                    }
-                }
-                thanaCode2 = pos;
-                Log.e("Position2", pos.toString());
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -826,44 +894,44 @@ public class form extends AppCompatActivity {
                 {
                     divisionStartIndex = 0; //thana list starts
                     divisionEndIndex = 41; //thana list ends
-                    setDistrictThanaList(barisalDistricList, barisalThanaList, autoDistrict3, autoThana3);
+                    setDistrictList(barisalDistricList, autoDistrict3);
                     //Log.e("division",division + thanaList1.length);
                 }
                 else if (division.equals("Chittagong"))
                 {
                     divisionStartIndex = 42;
                     divisionEndIndex = 152;
-                    setDistrictThanaList(chittagongDistricList, chittagongThanaList, autoDistrict3, autoThana3);
+                    setDistrictList(chittagongDistricList, autoDistrict3);
                 }
                 else if (division.equals("Dhaka"))
                 {
                     divisionStartIndex = 153;
                     divisionEndIndex = 321;
-                    setDistrictThanaList(dhakaDistricList, dhakaThanaList, autoDistrict3, autoThana3);
+                    setDistrictList(dhakaDistricList, autoDistrict3);
                 }
                 else if (division.equals("Khulna"))
                 {
                     divisionStartIndex = 322;
                     divisionEndIndex = 387;
-                    setDistrictThanaList(khulnaDistricList, khulnaThanaList, autoDistrict3, autoThana3);
+                    setDistrictList(khulnaDistricList, autoDistrict3);
                 }
                 else if (division.equals("Rajshahi"))
                 {
                     divisionStartIndex = 388;
                     divisionEndIndex = 457;
-                    setDistrictThanaList(rajshahiDistricList, rajshahiThanaList, autoDistrict3, autoThana3);
+                    setDistrictList(rajshahiDistricList, autoDistrict3);
                 }
                 else if (division.equals("Rangpur"))
                 {
                     divisionStartIndex = 458;
                     divisionEndIndex = 515;
-                    setDistrictThanaList(rangpurDistricList, rangpurThanaList, autoDistrict3, autoThana3);
+                    setDistrictList(rangpurDistricList, autoDistrict3);
                 }
                 else if (division.equals("Sylhet"))
                 {
                     divisionStartIndex = 516;
                     divisionEndIndex = 553;
-                    setDistrictThanaList(sylthetDistricList, sylthetThanaList, autoDistrict3, autoThana3);
+                    setDistrictList(sylthetDistricList, autoDistrict3);
                 }
             }
         });
@@ -872,28 +940,31 @@ public class form extends AppCompatActivity {
         autoDistrict3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("district",autoDistrict3.getText().toString());
+                String dis = autoDistrict3.getText().toString();
+                Log.e("district",dis);
+                progressDialog = new ProgressDialog(form.this);
+                progressDialog.setTitle("Please wait...");
+                progressDialog.setMessage("");
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                getThanaList(dis,3);
             }
         });
 
-        autoThana3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        thanaSpinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("thana",autoThana3.getText().toString());
-                String selection = (String) parent.getItemAtPosition(position);
-                Integer pos = -1,i;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                thanaName3 = thanaSpinner3.getSelectedItem().toString();
+                thanaCode3 = thanaMap3.get(thanaName3);
+                Log.e("Position", thanaCode3);
+            }
 
-                for (i = divisionStartIndex; i <= divisionEndIndex; i++) {
-                    if (thanaList[i].equals(selection)) {
-                        pos = i+1;
-                        break;
-                    }
-                }
-                thanaCode3 = pos;
-                Log.e("Position3", pos.toString());
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
-
         pharmacyOwnerGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -902,11 +973,13 @@ public class form extends AppCompatActivity {
                         editownerName.setText(editdoctorName.getText().toString());
                         editownerEmail.setText(editdoctorEmail.getText().toString());
                         editownerPhoneNumber.setText(editfirstPhoneNumber.getText());
+                        pharmacyOwnerType = "Same";
                         break;
                     case R.id.sownerNo:
                         editownerName.setText("");
                         editownerEmail.setText("");
                         editownerPhoneNumber.setText("");
+                        pharmacyOwnerType = "Other";
                         break;
                 }
             }
@@ -1162,6 +1235,8 @@ public class form extends AppCompatActivity {
                 ownerPhoneNumber = editownerPhoneNumber.getText().toString();
                 dimension = editdimension.getText().toString();
                 remarks = editRemarks.getText().toString();
+                Log.e("remarks",remarks);
+                Log.e("chamber no",NumberOfChamber);
                 Integer flag = checkAllfields();
                 firstPhoneNumber = "+88" + firstPhoneNumber;
                 Log.e("first phone", firstPhoneNumber);
@@ -1229,7 +1304,7 @@ public class form extends AppCompatActivity {
         imageString3 = CustomUtility.imageToString(bitmap3);
         if(uri4 != null)
         imageString4 = CustomUtility.imageToString(bitmap4);
-        String upLoadServerUri = "https://deenal.com/api/doctor/insert_doctor.php";
+        String upLoadServerUri = "https://atmdbd.com/api/doctor/insert_doctor.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, upLoadServerUri,
                 new Response.Listener<String>() {
                     @Override
@@ -1290,8 +1365,8 @@ public class form extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("Tittle", tittle);
-                params.put("isConsent", doctorDisclaimer);
+                params.put("Title", tittle);
+                params.put("IsConsent", doctorDisclaimer);
                 params.put("DoctorName", doctorName);
                 params.put("Age", doctorAge);
                 params.put("Sex", doctorSex);
@@ -1300,8 +1375,8 @@ public class form extends AppCompatActivity {
                 params.put("IsFRCS", isFrcs);
                 params.put("IsMD", isMd);
                 params.put("IsDiploma", isDiploma);
-                params.put("IsBcs", isBcs);
-                params.put("otherDegree", doctorOtherdegree);
+                params.put("IsBCS", isBcs);
+                params.put("OtherDegree", doctorOtherdegree);
                 params.put("Category", category);
                 params.put("Designation", designation);
                 params.put("IsPrivatePractice", privatePractice);
@@ -1314,10 +1389,11 @@ public class form extends AppCompatActivity {
                 params.put("DoctorFees", visitFees);
                 params.put("RevisitFees", reVisitFees);
                 params.put("PharmacyOwnerType", pharmacyOwnerType);
+                params.put("NumberOfChamber",NumberOfChamber);
                 params.put("Cham01Address", fstchmberAdd);
                 params.put("Cham01Name",organizationName);
                 params.put("Cham01ZipCode",fstariaZipcode);
-                params.put("Cham01ThanaId", thanaCode1.toString());
+                params.put("Cham01ThanaId", thanaCode1);
                 params.put("Cham01TimeStart", fstchmberStarttime);
                 params.put("Cham01TimeEnd", fstchmberEndtime);
                 params.put("Cham01OffDay", fstchmberOffday);
@@ -1325,21 +1401,21 @@ public class form extends AppCompatActivity {
                 params.put("Cham01PharmacyOwnerName", ownerName);
                 params.put("Cham01PharmacyOwnerPhone01", ownerPhoneNumber);
                 params.put("Cham01PharmacyOwnerMail", ownerEmail);
-                params.put("Cham01HasTradeLicense", isTradelicense);
-                params.put("Cham01ChmaberDimension", dimension);
+                params.put("Cham01HasTradeLicence", isTradelicense);
+                params.put("Cham01ChamberDimension", dimension);
                 params.put("Cham01HasBrandingOpportunityInternal", isbrandingInternal);
                 params.put("Cham01HasBrandingOpportunityExternal", isbrandingExternal);
                 params.put("Cham01HasShopFascia", isfascia);
                 params.put("Cham01HasDoctorSignboard", isSignboard);
                 params.put("Cham02Address", scndchmberAdd);
-                params.put("Cham02ThanId", thanaCode2.toString());
+                params.put("Cham02ThanaId", thanaCode2);
                 params.put("Cham02ZipCode",scndariaZipcode);
                 params.put("Cham02TimeStart", scndchmberStarttime);
                 params.put("Cham02TimeEnd", scndchmberEndtime);
                 params.put("Cham02OffDay", scndchmberOffday);
                 params.put("Cham02PremiseType", scndchmberType);
                 params.put("Cham03Address", thirdchmberAdd);
-                params.put("Cham03ThanId", thanaCode3.toString());
+                params.put("Cham03ThanaId", thanaCode3);
                 params.put("Cham03ZipCode",thirdariaZipcode);
                 params.put("Cham03TimeStart", thirdchmberStarttime);
                 params.put("Cham03TimeEnd", thirdchmberEndtime);
@@ -1353,7 +1429,8 @@ public class form extends AppCompatActivity {
                 params.put("PictureDoctorCardData", imageString2);
                 params.put("PicturePremiseFrontData", imageString3);
                 params.put("PictureChamberData", imageString4);
-                params.put("CreatedBy",LoginActivity.id);
+                params.put("Remark", remarks);
+                params.put("CreatedBy",id);
                 return params;
             }
         };
@@ -1364,11 +1441,136 @@ public class form extends AppCompatActivity {
         MySingleton.getInstance(form.this).addToRequestQue(stringRequest);
     }
 
+    public void getThanaList(final String disName, final Integer chamberId)
+    {
+        String upLoadServerUri="https://atmdbd.com/api/CommThana/get_thana_by_district_name.php";
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, upLoadServerUri,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            progressDialog.dismiss();
+                            Log.e("Server Response",response);
+                            JSONObject j;
+                            JSONObject jo = new JSONObject(response);
+                            String code = jo.getString("success");
+                            String message = jo.getString("message");
+
+                            if(code.equals("true"))
+                            {
+                                JSONArray ja = jo.getJSONArray("resultThanaList");
+                                //Log.e("ThanaList", String.valueOf(ja));
+                                List<String> thList = new ArrayList<String>();
+                                if(chamberId == 1)
+                                {
+                                    thanaMap1 = new HashMap<String, String>();
+                                    for(int i = 0; i<ja.length(); i++)
+                                    {
+                                        j = ja.getJSONObject(i);
+                                        //Log.e("thana", String.valueOf(j));
+                                        thanaMap1.put(j.getString("ThanaName"),j.getString("ThanaId"));
+                                        thList.add(j.getString("ThanaName"));
+                                    }
+                                }
+                                else if(chamberId == 2)
+                                {
+                                    thanaMap2 = new HashMap<String, String>();
+                                    for(int i = 0; i<ja.length(); i++)
+                                    {
+                                        j = ja.getJSONObject(i);
+                                        //Log.e("thana", String.valueOf(j));
+                                        thanaMap2.put(j.getString("ThanaName"),j.getString("ThanaId"));
+                                        thList.add(j.getString("ThanaName"));
+                                    }
+                                }
+                                else if(chamberId == 3)
+                                {
+                                    thanaMap3 = new HashMap<String, String>();
+                                    for(int i = 0; i<ja.length(); i++)
+                                    {
+                                        j = ja.getJSONObject(i);
+                                        //Log.e("thana", String.valueOf(j));
+                                        thanaMap3.put(j.getString("ThanaName"),j.getString("ThanaId"));
+                                        thList.add(j.getString("ThanaName"));
+                                    }
+                                }
+
+                                //Log.e("lst", String.valueOf(thList));
+                                showThanaList(thList, chamberId);
+
+                            }else {
+                                CustomUtility.showAlert(form.this,"No thana list found by district id",message);
+                            }
+
+                        } catch (JSONException e) {
+                            CustomUtility.showAlert(form.this,e.getMessage(),"Getting Response");
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                try {
+                    progressDialog.dismiss();
+                    String responseBody = new String(error.networkResponse.data, "utf-8");
+                    JSONObject data = new JSONObject(responseBody);
+                    JSONArray errors = data.getJSONArray("server_response");
+                    JSONObject jsonMessage = errors.getJSONObject(0);
+                    String code = jsonMessage.getString("code");
+                    String message = jsonMessage.getString("message");
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    CustomUtility.showAlert(form.this,message,"Get Thana List Failed");
+                } catch (JSONException e) {
+                    CustomUtility.showAlert(form.this, e.getMessage(), "Exception e");
+
+                } catch (UnsupportedEncodingException errorr) {
+                    CustomUtility.showAlert(form.this, errorr.getMessage(), "Exception error");
+                }
+
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params=new HashMap<>();
+                params.put("DistrictName",disName);
+                return params;
+            }
+        };
+
+        MySingleton.getInstance(form.this).addToRequestQue(stringRequest);
+    }
+
+    public void showThanaList(List<String> lst, Integer chId)
+    {
+        ArrayAdapter<String> adapter20 = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, lst);
+        if(chId == 1)
+        {
+            thanaSpinner1.setAdapter(adapter20);
+        }
+        else if(chId == 2)
+        {
+            thanaSpinner2.setAdapter(adapter20);
+        }
+        else if(chId == 3)
+        {
+            thanaSpinner3.setAdapter(adapter20);
+        }
+
+    }
 
     public Integer checkAllfields()
     {
         //Log.e("name",doctorName);
-        if (doctorName.equals(""))
+        if(doctorDisclaimer.equals(""))
+        {
+            CustomUtility.showAlert(this,"Doctor must see the consent","Fill the feilds");
+            return 1;
+        }
+        else if (doctorName.equals(""))
         {
             CustomUtility.showAlert(this, "Please fill doctor's name","Fill the feilds");
             return 1;
@@ -1437,7 +1639,7 @@ public class form extends AppCompatActivity {
             CustomUtility.showAlert(this, "Please fill doctor's revisit fees","Fill the feilds");
             return 1;
         }
-        else if(thanaCode1 == -1)
+        else if(thanaCode1.equals(""))
         {
             CustomUtility.showAlert(this, "Please fill 1st chmaber's address","Fill the feilds");
             return 1;
@@ -1450,6 +1652,36 @@ public class form extends AppCompatActivity {
         else if(fstariaZipcode.equals(""))
         {
             CustomUtility.showAlert(this, "Please fill 1st chamber's aria zipcode","Fill the feilds");
+            return 1;
+        }
+        else if(!fstchmberStarttime.equals("") & fstchmberStarttime.indexOf(':') == -1)
+        {
+            CustomUtility.showAlert(this, "Please fill the first chamber start time in 10:00 and 24h format","Fill the feilds");
+            return 1;
+        }
+        else if(!fstchmberEndtime.equals("") & fstchmberEndtime.indexOf(':') == -1)
+        {
+            CustomUtility.showAlert(this, "Please fill the first chamber end time in 17:00 and 24h format","Fill the feilds");
+            return 1;
+        }
+        else if(!scndchmberStarttime.equals("") & scndchmberStarttime.indexOf(':') == -1)
+        {
+            CustomUtility.showAlert(this, "Please fill the first chamber second time in 10:00 and 24h format","Fill the feilds");
+            return 1;
+        }
+        else if(!scndchmberEndtime.equals("") & scndchmberEndtime.indexOf(':') == -1)
+        {
+            CustomUtility.showAlert(this, "Please fill the second chamber end time in 17:00 and 24h format","Fill the feilds");
+            return 1;
+        }
+        else if(!thirdchmberStarttime.equals("") & thirdchmberStarttime.indexOf(':') == -1)
+        {
+            CustomUtility.showAlert(this, "Please fill the third chamber start time in 10:00 and 24h format","Fill the feilds");
+            return 1;
+        }
+        else if(!thirdchmberEndtime.equals("") & thirdchmberEndtime.indexOf(':') == -1)
+        {
+            CustomUtility.showAlert(this, "Please fill the third chamber end time in 17:00 and 24h format","Fill the feilds");
             return 1;
         }
         else if(isCommsagreed.equals(""))
@@ -1514,15 +1746,12 @@ public class form extends AppCompatActivity {
     }
 
 
-    public void setDistrictThanaList(String[] districtlst, String[] thanalst, AutoCompleteTextView autodivision,AutoCompleteTextView autothana)
+    public void setDistrictList(String[] districtlst, AutoCompleteTextView autodivision)
     {
         ArrayAdapter<String> adapter8 = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, districtlst);
         autodivision.setThreshold(1);
         autodivision.setAdapter(adapter8);
 
-        ArrayAdapter<String> adapter9 = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, thanalst);
-        autothana.setThreshold(1);
-        autothana.setAdapter(adapter9);
     }
 
 
@@ -1659,7 +1888,7 @@ public class form extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            json_url = "https://deenal.com/api/doctor/user_status.php";
+            json_url = "https://atmdbd.com/api/doctor/user_status.php";
             progressDialog = new ProgressDialog(form.this);
             progressDialog.setTitle("Please wait...");
             progressDialog.setMessage("");

@@ -25,7 +25,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:text="Your Visits"
@@ -40,7 +40,29 @@
 
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Your ID"
+                    android:gravity="center"
+                    android:textColor="@color/blue"
+                    android:textSize="18sp"></TextView>
+
+                <TextView
+                    android:id="@+id/id"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/blue"
+                    android:textSize="18sp"></TextView>
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -671,7 +693,7 @@
                     android:gravity="right"
                     android:paddingLeft="10dp"
                     android:paddingBottom="5dp"
-                    android:text=" Tittle: "
+                    android:text=" Title: "
                     android:textColor="@color/text_color"
                     android:textSize="19sp"
                     android:textStyle="bold"
@@ -998,7 +1020,7 @@
                         android:layout_marginRight="8dp"
                         android:gravity="center"
                         android:paddingBottom="5dp"
-                        android:text="Re visit"
+                        android:text="Revisit"
                         android:textColor="@color/check"
                         android:textSize="15sp"
                         android:textStyle="bold"
@@ -1172,14 +1194,14 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/firstdivisionList" />
 
-                        <AutoCompleteTextView
-                            android:id="@+id/firstthanaList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40sp"
+                        <Spinner
+                            android:id="@+id/firstThanaList"
+                            android:layout_width="170dp"
+                            android:layout_height="45dp"
                             android:layout_weight="1"
-                            android:hint="Thana"
-                            android:textColor="@color/input_color"
-                            android:textColorHint="@color/blue" />
+                            android:background="@android:drawable/btn_dropdown"
+                            android:spinnerMode="dropdown"
+                            />
                     </LinearLayout>
 
                     <EditText
@@ -1217,7 +1239,7 @@
 
                     <EditText
                         android:id="@+id/fstzipcode"
-                        android:layout_width="170dp"
+                        android:layout_width="155dp"
                         android:layout_height="45dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/edit_text"
@@ -1266,8 +1288,10 @@
                         android:layout_width="80dp"
                         android:layout_height="35sp"
                         android:background="@drawable/edit_text_two"
-                        android:hint="10"
+                        android:hint="10:00"
+                        android:maxLength="5"
                         android:paddingLeft="10sp"
+                        android:inputType="datetime"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -1295,8 +1319,10 @@
                         android:layout_width="80dp"
                         android:layout_height="35sp"
                         android:background="@drawable/edit_text_two"
-                        android:hint="5"
+                        android:hint="17:00"
+                        android:maxLength="5"
                         android:paddingLeft="10sp"
+                        android:inputType="datetime"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -1482,14 +1508,14 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/seconddivisionList" />
 
-                        <AutoCompleteTextView
-                            android:id="@+id/secondthanaList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40sp"
+                        <Spinner
+                            android:id="@+id/secondThanaList"
+                            android:layout_width="155dp"
+                            android:layout_height="45dp"
                             android:layout_weight="1"
-                            android:hint="Thana"
-                            android:textColor="@color/input_color"
-                            android:textColorHint="@color/blue" />
+                            android:background="@android:drawable/btn_dropdown"
+                            android:spinnerMode="dropdown"
+                            />
                     </LinearLayout>
 
                     <EditText
@@ -1575,8 +1601,10 @@
                         android:layout_width="80dp"
                         android:layout_height="35sp"
                         android:background="@drawable/edit_text_two"
-                        android:hint="10"
+                        android:hint="10:00"
+                        android:maxLength="5"
                         android:paddingLeft="10sp"
+                        android:inputType="datetime"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -1603,7 +1631,9 @@
                         android:layout_width="80dp"
                         android:layout_height="35sp"
                         android:background="@drawable/edit_text_two"
-                        android:hint="5"
+                        android:hint="17:00"
+                        android:maxLength="5"
+                        android:inputType="datetime"
                         android:paddingLeft="10sp"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
@@ -1781,14 +1811,14 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/thirddivisionList" />
 
-                        <AutoCompleteTextView
-                            android:id="@+id/thirdthanaList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40sp"
+                        <Spinner
+                            android:id="@+id/thirdThanaList"
+                            android:layout_width="155dp"
+                            android:layout_height="45dp"
                             android:layout_weight="1"
-                            android:hint="Thana"
-                            android:textColor="@color/input_color"
-                            android:textColorHint="@color/blue" />
+                            android:background="@android:drawable/btn_dropdown"
+                            android:spinnerMode="dropdown"
+                            />
                     </LinearLayout>
 
                     <EditText
@@ -1872,7 +1902,9 @@
                         android:layout_width="80dp"
                         android:layout_height="35sp"
                         android:background="@drawable/edit_text_two"
-                        android:hint="10"
+                        android:hint="10:00"
+                        android:maxLength="5"
+                        android:inputType="datetime"
                         android:paddingLeft="10sp"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
@@ -1900,7 +1932,9 @@
                         android:layout_width="80dp"
                         android:layout_height="35sp"
                         android:background="@drawable/edit_text_two"
-                        android:hint="5.00"
+                        android:hint="17.00"
+                        android:maxLength="5"
+                        android:inputType="datetime"
                         android:paddingLeft="10sp"
                         android:textColor="@color/input_color"
                         android:textColorHint="@color/black"
@@ -2769,7 +2803,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="Version : 1"
+                android:text="Version : 1.0"
                 android:textColor="@color/input_color"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"

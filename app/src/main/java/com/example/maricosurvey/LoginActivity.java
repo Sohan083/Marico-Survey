@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (code.equals("true")) {
                     userid = edtid.getText().toString();
                     Bundle IDbundle = new Bundle();
-                    IDbundle.putString("id", userid);
+                    IDbundle.putString("id", id);
                     Intent intent = new Intent(getApplicationContext(), form.class);
                     intent.putExtras(IDbundle);
                     startActivity(intent);
@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            json_url = "https://deenal.com/api/login/login.php";
+            json_url = "https://atmdbd.com/api/login/login.php";
             progressDialog = new ProgressDialog(LoginActivity.this);
             progressDialog.setTitle("Please wait...");
             progressDialog.setMessage("");
