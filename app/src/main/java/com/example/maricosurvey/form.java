@@ -159,9 +159,13 @@ public class form extends AppCompatActivity {
     Map<String, String> thanaMap2 ;
     Map<String, String> thanaMap3 ;
 
+    int flag = 0;  // if activity restarts it will go 1
+
 // saving instances in case of activity restarts for camera intent
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
+        flag = flag + 1;
+        outState.putInt("flag",flag);
         outState.putString("id",id);
         outState.putString("IsConsent",doctorDisclaimer);
         outState.putString("IsMBBS",isMbbs);
@@ -175,7 +179,7 @@ public class form extends AppCompatActivity {
         outState.putString("IsPrivatePractice",privatePractice);
         outState.putString("Title",tittle);
         outState.putString("NumberOfChamber",NumberOfChamber);
-        outState.putString("thanaName1",thanaName1);
+        outState.putString("ThanaName1",thanaName1);
         outState.putString("ThanaName2",thanaName2);
         outState.putString("ThanaName3",thanaName3);
         outState.putString("ThanaCode1",thanaCode1);
@@ -251,95 +255,115 @@ public class form extends AppCompatActivity {
 
 
 // if activity restarts then restore those instances
-        if(s != null)
+        try{
+            if(s != null)
+            {
+                flag = s.getInt("flag");
+                id = s.getString("id");
+                doctorDisclaimer = s.getString("IsConsent");
+                isMbbs = s.getString("IsMBBS");
+                isFcps = s.getString("IsFCPS");
+                isFrcs = s.getString("IsFRCS");
+                isMd = s.getString("IsMD");
+                isDiploma = s.getString("IsDiploma");
+                isBcs = s.getString("IsBCS");
+                designation = s.getString("Designation");
+                category = s.getString("Category");
+                privatePractice = s.getString("IsPrivatePractice");
+                tittle = s.getString("Title");
+                NumberOfChamber = s.getString("NumberOfChamber");
+                if(NumberOfChamber.equals("2"))
+                {
+                    rd = findViewById(R.id.ch2);
+                    rd.setChecked(true);
+                }
+                else if(NumberOfChamber.equals("3"))
+                {
+                    rd = findViewById(R.id.ch3);
+                    rd.setChecked(true);
+                }
+                thanaCode1 = s.getString("ThanaCode1");
+                thanaName1 = s.getString("ThanaName1");
+                if(!thanaCode1.equals("") & !thanaName1.equals(""))
+                {
+                    List<String> lst = new ArrayList<String>();
+                    lst.add(thanaName1);
+                    showThanaList(lst,1);
+                }
+                thanaCode2 = s.getString("ThanaCode2");
+                thanaName2 = s.getString("ThanaName2");
+                if(!thanaCode2.equals("") & !thanaName2.equals(""))
+                {
+                    List<String> lst = new ArrayList<String>();
+                    lst.add(thanaName2);
+                    showThanaList(lst,2);
+                }
+                thanaCode3 = s.getString("ThanaCode3");
+                thanaName3 = s.getString("ThanaName3");
+                if(!thanaCode3.equals("") & !thanaName3.equals(""))
+                {
+                    List<String> lst = new ArrayList<String>();
+                    lst.add(thanaName3);
+                    showThanaList(lst,3);
+                }
+                fstchmberOffday = s.getString("Cham01OffDay");
+                fstchmberType = s.getString("Cham01Type");
+                scndchmberOffday = s.getString("Cham02OffDay");
+                scndchmberType = s.getString("Cham02Type");
+                thirdchmberOffday = s.getString("Cham03OffDay");
+                thirdchmberType = s.getString("Cham03Type");
+                pharmacyOwnerType = s.getString("PharmacyOwnerType");
+                isTradelicense = s.getString("IsTradeLicense");
+                isCommsagreed = s.getString("IsAgreed");
+                isbrandingExternal = s.getString("IsBrandingExternal");
+                isbrandingInternal = s.getString("IsBrandingInternal");
+                isfascia = s.getString("IsFascia");
+                isSignboard = s.getString("IsSignboard");
+                premisePhotoPath = s.getString("PremisePhotoPath");
+                cardPhotPath = s.getString("CardPhotoPath");
+                signboardPhotPath = s.getString("SignboradPhotoPath");
+                chamberPhotoPath = s.getString("ChamberPhotoPath");
+                if(!premisePhotoPath.equals(""))
+                {
+                    textPremise.setBackgroundResource(R.drawable.ok_button_square);
+                    temp = textPremise.getText().toString() + "Ok";
+                    textPremise.setText(temp);
+                }
+                if(!cardPhotPath.equals(""))
+                {
+                    textCard.setBackgroundResource(R.drawable.ok_button_square);
+                    temp = textCard.getText().toString() + "Ok";
+                    textCard.setText(temp);
+                }
+                if(!signboardPhotPath.equals(""))
+                {
+                    textSignboard.setBackgroundResource(R.drawable.ok_button_square);
+                    temp = textSignboard.getText().toString() + "Ok";
+                    textSignboard.setText(temp);
+                }
+                if(!chamberPhotoPath.equals(""))
+                {
+                    textChamber.setBackgroundResource(R.drawable.ok_button_square);
+                    temp = textChamber.getText().toString() + "Ok";
+                    textChamber.setText(temp);
+                }
+                try {
+                    Process process = Runtime.getRuntime().exec("logcat -d");
+                    process = Runtime.getRuntime().exec( "logcat -f " + "/storage/emulated/0/"+"Logging.txt");
+                }catch(Exception ee)
+                {
+                    ee.printStackTrace();
+                }
+            }
+
+        }catch (Exception e)
         {
-            id = s.getString("id");
-            doctorDisclaimer = s.getString("IsConsent");
-            isMbbs = s.getString("IsMBBS");
-            isFcps = s.getString("IsFCPS");
-            isFrcs = s.getString("IsFRCS");
-            isMd = s.getString("IsMD");
-            isDiploma = s.getString("IsDiploma");
-            isBcs = s.getString("IsBCS");
-            designation = s.getString("Designation");
-            category = s.getString("Category");
-            privatePractice = s.getString("IsPrivatePractice");
-            tittle = s.getString("Title");
-            NumberOfChamber = s.getString("NumberOfChamber");
-            if(NumberOfChamber.equals("2"))
+            try {
+                Process process = Runtime.getRuntime().exec("logcat -d");
+                process = Runtime.getRuntime().exec( "logcat -f " + "/storage/emulated/0/MaricoLog"+"LogCat.txt");
+            }catch(Exception ee)
             {
-                rd = findViewById(R.id.ch2);
-                rd.setChecked(true);
-            }
-            else if(NumberOfChamber.equals("3"))
-            {
-                rd = findViewById(R.id.ch3);
-                rd.setChecked(true);
-            }
-            thanaCode1 = s.getString("ThanaCode1");
-            thanaName1 = s.getString("ThanaName1");
-            if(!thanaCode1.equals(""))
-            {
-                List<String> lst = new ArrayList<String>();
-                lst.add(thanaName1);
-                showThanaList(lst,1);
-            }
-            thanaCode2 = s.getString("ThanaCode2");
-            thanaName2 = s.getString("ThanaName2");
-            if(!thanaCode2.equals(""))
-            {
-                List<String> lst = new ArrayList<String>();
-                lst.add(thanaName2);
-                showThanaList(lst,2);
-            }
-            thanaCode3 = s.getString("ThanaCode3");
-            thanaName3 = s.getString("ThanaName3");
-            if(!thanaCode3.equals(""))
-            {
-                List<String> lst = new ArrayList<String>();
-                lst.add(thanaName3);
-                showThanaList(lst,3);
-            }
-            fstchmberOffday = s.getString("Cham01OffDay");
-            fstchmberType = s.getString("Cham01Type");
-            scndchmberOffday = s.getString("Cham02OffDay");
-            scndchmberType = s.getString("Cham02Type");
-            thirdchmberOffday = s.getString("Cham03OffDay");
-            thirdchmberType = s.getString("Cham03Type");
-            pharmacyOwnerType = s.getString("PharmacyOwnerType");
-            isTradelicense = s.getString("IsTradeLicense");
-            isCommsagreed = s.getString("IsAgreed");
-            isbrandingExternal = s.getString("IsBrandingExternal");
-            isbrandingInternal = s.getString("IsBrandingInternal");
-            isfascia = s.getString("IsFascia");
-            isSignboard = s.getString("IsSignboard");
-            premisePhotoPath = s.getString("PremisePhotoPath");
-            cardPhotPath = s.getString("CardPhotoPath");
-            signboardPhotPath = s.getString("SignboradPhotoPath");
-            chamberPhotoPath = s.getString("ChamberPhotoPath");
-            if(!premisePhotoPath.equals(""))
-            {
-                textPremise.setBackgroundResource(R.drawable.ok_button_square);
-                temp = textPremise.getText().toString() + "Ok";
-                textPremise.setText(temp);
-            }
-            if(!cardPhotPath.equals(""))
-            {
-                textCard.setBackgroundResource(R.drawable.ok_button_square);
-                temp = textCard.getText().toString() + "Ok";
-                textCard.setText(temp);
-            }
-            if(!signboardPhotPath.equals(""))
-            {
-                textSignboard.setBackgroundResource(R.drawable.ok_button_square);
-                temp = textSignboard.getText().toString() + "Ok";
-                textSignboard.setText(temp);
-            }
-            if(!chamberPhotoPath.equals(""))
-            {
-                textChamber.setBackgroundResource(R.drawable.ok_button_square);
-                temp = textChamber.getText().toString() + "Ok";
-                textChamber.setText(temp);
+                ee.printStackTrace();
             }
         }
 
@@ -780,6 +804,7 @@ public class form extends AppCompatActivity {
                 progressDialog.setIndeterminate(true);
                 progressDialog.setCancelable(false);
                 progressDialog.show();
+                flag = 0;
                 getThanaList(dis,1);
             }
         });
@@ -787,9 +812,12 @@ public class form extends AppCompatActivity {
         thanaSpinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                thanaName1 = thanaSpinner1.getSelectedItem().toString();
-                thanaCode1 = thanaMap1.get(thanaName1);
-                Log.e("Position", thanaCode1);
+                if(flag == 0)
+                {
+                    thanaName1 = thanaSpinner1.getSelectedItem().toString();
+                    thanaCode1 = thanaMap1.get(thanaName1);
+                    Log.e("Position", thanaCode1);
+                }
             }
 
             @Override
@@ -864,6 +892,7 @@ public class form extends AppCompatActivity {
                 progressDialog.setIndeterminate(true);
                 progressDialog.setCancelable(false);
                 progressDialog.show();
+                flag = 0;
                 getThanaList(dis,2);
             }
         });
@@ -871,9 +900,12 @@ public class form extends AppCompatActivity {
         thanaSpinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                thanaName2 = thanaSpinner2.getSelectedItem().toString();
-                thanaCode2 = thanaMap2.get(thanaName2);
-                Log.e("Position", thanaCode2);
+                if(flag == 0)
+                {
+                    thanaName2 = thanaSpinner2.getSelectedItem().toString();
+                    thanaCode2 = thanaMap2.get(thanaName2);
+                    Log.e("Position", thanaCode2);
+                }
             }
 
             @Override
@@ -948,6 +980,7 @@ public class form extends AppCompatActivity {
                 progressDialog.setIndeterminate(true);
                 progressDialog.setCancelable(false);
                 progressDialog.show();
+                flag = 0;
                 getThanaList(dis,3);
             }
         });
@@ -955,9 +988,12 @@ public class form extends AppCompatActivity {
         thanaSpinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                thanaName3 = thanaSpinner3.getSelectedItem().toString();
-                thanaCode3 = thanaMap3.get(thanaName3);
-                Log.e("Position", thanaCode3);
+                if(flag == 0)
+                {
+                    thanaName3 = thanaSpinner3.getSelectedItem().toString();
+                    thanaCode3 = thanaMap3.get(thanaName3);
+                    Log.e("Position", thanaCode3);
+                }
             }
 
             @Override
