@@ -1480,6 +1480,7 @@ public class form extends AppCompatActivity {
     public void getThanaList(final String disName, final Integer chamberId)
     {
         String upLoadServerUri="https://atmdbd.com/api/CommThana/get_thana_by_district_name.php";
+        //String upLoadServerUri="https://deenal.com/app/CommThana/get_thana_by_district_name.php";
         StringRequest stringRequest=new StringRequest(Request.Method.POST, upLoadServerUri,
                 new Response.Listener<String>() {
                     @Override
@@ -1550,6 +1551,7 @@ public class form extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 try {
                     progressDialog.dismiss();
+                    Log.e("error response",error.toString());
                     String responseBody = new String(error.networkResponse.data, "utf-8");
                     JSONObject data = new JSONObject(responseBody);
                     JSONArray errors = data.getJSONArray("server_response");
